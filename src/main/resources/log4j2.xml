@@ -7,14 +7,22 @@
 
     <Appenders>
         <Console name="CONSOLE">
-            <PatternLayout pattern="%5p %d %c{1} - %m%n"/>
+            <PatternLayout pattern="%5p %d %-25c{1} - %m%n"/>
         </Console>
+        <File name="MAIN" fileName="logs/main.log">
+            <PatternLayout pattern="%5p %d %c{1} - %m%n" />
+        </File>
+        <File name="WARN" fileName="logs/error.log">
+            <PatternLayout pattern="%5p %d %c{1} - %m%n" />
+        </File>
     </Appenders>
 
     <Loggers>
-        <Logger name="ru.bstu.itz212.fokin.lab2" level="ALL"/>
-        <Root level="INFO">
+
+        <Root level="DEBUG">
             <AppenderRef ref="CONSOLE"/>
+            <AppenderRef ref="MAIN" />
+            <AppenderRef ref="WARN" level="ERROR" />
         </Root>
     </Loggers>
 

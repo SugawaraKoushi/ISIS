@@ -11,6 +11,7 @@ package ru.bstu.itz212.fokin.lab2;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import java.util.InputMismatchException;
 import java.util.Scanner;
 
 public class ConsoleInput {
@@ -26,15 +27,24 @@ public class ConsoleInput {
      * @return точка
      */
     public static Point point() {
-        System.out.println("Ввод координат точки:");
+        double x = 0;
+        double y = 0;
 
-        System.out.print("x = ");
-        double x = sc.nextDouble();
+        LOGGER.info("Ввод координат точки:");
 
-        System.out.print("y = ");
-        double y = sc.nextDouble();
+        try {
+            LOGGER.info("x = ");
+            x = sc.nextDouble();
 
-        return new Point(x, y);
+            LOGGER.info("y = ");
+            y = sc.nextDouble();
+
+            return new Point(x, y);
+        } catch (InputMismatchException e) {
+            LOGGER.error("Некорректный ввод", e);
+        }
+
+        return null;
     }
 
     /**
@@ -42,18 +52,28 @@ public class ConsoleInput {
      * @return окружность
      */
     public static Circle circle() {
-        System.out.println("Ввод параметров окружности:");
+        double x = 0;
+        double y = 0;
+        double r = 0;
 
-        System.out.print("x = ");
-        double x = sc.nextDouble();
+        LOGGER.info("Ввод параметров окружности:");
 
-        System.out.print("y = ");
-        double y = sc.nextDouble();
+        try {
+            LOGGER.info("x = ");
+            x = sc.nextDouble();
 
-        System.out.print("r = ");
-        double r = sc.nextDouble();
+            LOGGER.info("y = ");
+            y = sc.nextDouble();
 
-        return new Circle(x, y, r);
+            LOGGER.info("r = ");
+            r = sc.nextDouble();
+
+            return new Circle(x, y, r);
+        } catch (InputMismatchException e) {
+            LOGGER.error("Некорректный ввод", e);
+        }
+
+        return null;
     }
 
     /**
@@ -61,7 +81,7 @@ public class ConsoleInput {
      * @return порядковый номер месяца
      */
     public static int month() {
-        System.out.print("Введите номер месяца (от 1 до 12): ");
+        LOGGER.info("Введите номер месяца (от 1 до 12): ");
         return sc.nextInt();
     }
 
@@ -73,7 +93,7 @@ public class ConsoleInput {
         int length;
 
         do {
-            System.out.print("Введите длину массива: ");
+            LOGGER.info("Введите длину массива: ");
             length = sc.nextInt();
 
             if (length < 1) LOGGER.warn("Ввод нулевой или отрицательной длины массива");
@@ -85,7 +105,12 @@ public class ConsoleInput {
         LOGGER.debug("Ввод значений массива");
         for (int i = 0; i < length; i++) {
             System.out.printf("a[%d] = ", i);
-            array[i] = sc.nextInt();
+
+            try {
+                array[i] = sc.nextInt();
+            } catch (InputMismatchException e) {
+                LOGGER.error("Некорректный ввод", e);
+            }
         }
 
         return array;

@@ -8,10 +8,14 @@
 
 package ru.bstu.itz212.fokin.lab2;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 /**
  * Представление определения максимального отношения числа к сумме его цифр
  */
 public class MaxNumberToSumOfItsDigits {
+    private static final Logger LOGGER = LogManager.getLogger();
     /**
      * Определение максимального отношения числа к сумме его цифр, используя цикл for
      * @return максимальное значение отношения числа к сумме его цифр
@@ -20,7 +24,9 @@ public class MaxNumberToSumOfItsDigits {
         double max = 0;
 
         for (int i = 100; i < 1000; i++) {
+            LOGGER.debug("Определения суммы цифр для числа {}", i);
             int sum = getNumberSumDigits(i);
+            LOGGER.debug("Определение отношения числа {} к сумме его цифр {}", i, sum);
             double ratio = (double) i / sum;
             max = Math.max(max, ratio);
         }
@@ -37,7 +43,9 @@ public class MaxNumberToSumOfItsDigits {
         int i = 99;
 
         while (++i < 1000) {
+            LOGGER.debug("Определения суммы цифр для числа {}", i);
             int sum = getNumberSumDigits(i);
+            LOGGER.debug("Определение отношения числа {} к сумме его цифр {}", i, sum);
             double ratio = (double) i / sum;
             max = Math.max(max, ratio);
         }

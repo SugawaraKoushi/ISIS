@@ -34,7 +34,7 @@ public class FileReader {
             double y;
 
             if (!sc.hasNextLine()) {
-                LOGGER.debug("Файл пуст");
+                LOGGER.debug("Файл \"{}\" пуст", path);
                 return p;
             }
 
@@ -69,14 +69,17 @@ public class FileReader {
             double y;
             double r;
 
-            if (!sc.hasNextLine()) return c;
+            if (!sc.hasNextLine()) {
+                LOGGER.debug("Файл \"{}\" пуст", path);
+                return c;
+            }
 
             x = sc.nextDouble();
             y = sc.nextDouble();
             r = sc.nextDouble();
             c = new Circle(x, y, r);
-        } catch (Exception e) {
-            e.printStackTrace();
+        } catch (FileNotFoundException e) {
+            LOGGER.error("Файл по указанному пути {} не найден", path, e);
         } finally {
             if (sc != null) {
                 sc.close();
@@ -102,8 +105,8 @@ public class FileReader {
             if (!sc.hasNextLine()) return month;
 
             month = sc.nextInt();
-        } catch (Exception e) {
-            e.printStackTrace();
+        } catch (FileNotFoundException e) {
+            LOGGER.error("Файл по указанному пути {} не найден", path, e);
         } finally {
             if (sc != null) {
                 sc.close();
@@ -126,19 +129,25 @@ public class FileReader {
         try {
             sc = new Scanner(file);
 
-            if (!sc.hasNextLine()) return array;
+            if (!sc.hasNextLine()) {
+                LOGGER.debug("Файл \"{}\" пуст", path);
+                return array;
+            }
 
             int length = sc.nextInt();
 
-            if (length < 1) return array;
+            if (length < 1) {
+                LOGGER.warn("Нулевая или отрицательная длина массива");
+                return array;
+            }
 
             array = new int[length];
 
             for (int i = 0; i < length; i++) {
                 array[i] = sc.nextInt();
             }
-        } catch (Exception e) {
-            e.printStackTrace();
+        } catch (FileNotFoundException e) {
+            LOGGER.error("Файл по указанному пути {} не найден", path, e);
         } finally {
             if (sc != null) {
                 sc.close();
