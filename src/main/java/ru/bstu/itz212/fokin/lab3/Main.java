@@ -11,5 +11,6 @@ public class Main {
         Publication p = new Book();
 
         p.init(scanner);
+        System.out.println(p);
     }
 }
