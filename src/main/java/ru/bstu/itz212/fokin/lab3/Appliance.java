@@ -16,5 +16,4 @@ import java.util.Scanner;
 public abstract class Appliance {
     public abstract void init(Scanner scanner);
     public abstract String getCost();
-    public abstract String toString();
 }
