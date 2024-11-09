@@ -3,7 +3,6 @@ package ru.bstu.itz212.fokin.lab3;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
@@ -25,13 +24,14 @@ public class Main {
     }
 
     public static Appliance getApplianceType(Scanner scanner) {
-        System.out.println("""
+        System.out.print("""
                 Выберите тип техники:
                 1 - газовая плита;
                 2 - электронная техника;
                 3 - микроволновка.
                 """);
         int type = scanner.nextInt();
+        scanner.nextLine();
 
         Appliance appliance = switch (type) {
             case 1 -> new GasStove();
@@ -55,7 +55,13 @@ public class Main {
         List<Appliance> applianceList = new ArrayList<>();
 
         for (int i = 0; i < count; i++) {
-            applianceList.add(getApplianceType(scanner));
+            Appliance appliance = getApplianceType(scanner);
+            applianceList.add(appliance);
         }
+
+        ApplianceComparator comparator = new ApplianceComparator();
+        applianceList.sort(comparator);
+
+        System.out.println(applianceList.get(applianceList.size() - 1));
     }
 }
