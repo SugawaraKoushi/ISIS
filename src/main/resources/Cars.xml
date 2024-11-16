@@ -5,12 +5,10 @@
         <model>Camry</model>
         <color>Black</color>
         <licensePlate>А123ВЕ78</licensePlate>
-        <owner>
-            <person gender="male">
-                <lastName>Иванов</lastName>
-                <firstName>Иван</firstName>
-                <middleName>Иванович</middleName>
-            </person>
+        <owner gender="male">
+            <lastName>Иванов</lastName>
+            <firstName>Иван</firstName>
+            <middleName>Иванович</middleName>
         </owner>
     </car>
     <car id="2">
@@ -18,12 +16,10 @@
         <model>X5</model>
         <color>Silver</color>
         <licensePlate>К456МУ90</licensePlate>
-        <owner>
-            <person gender="female">
-                <lastName>Петрова</lastName>
-                <firstName>Анна</firstName>
-                <middleName>Павловна</middleName>
-            </person>
+        <owner gender="female">
+            <lastName>Петрова</lastName>
+            <firstName>Анна</firstName>
+            <middleName>Павловна</middleName>
         </owner>
     </car>
 </cars>

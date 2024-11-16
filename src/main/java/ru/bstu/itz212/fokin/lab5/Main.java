@@ -1,5 +1,9 @@
 package ru.bstu.itz212.fokin.lab5;
 
+import ru.bstu.itz212.fokin.lab5.models.Car;
+import ru.bstu.itz212.fokin.lab5.models.CarOwner;
+import ru.bstu.itz212.fokin.lab5.repositories.CarOwnerRepository;
+import ru.bstu.itz212.fokin.lab5.repositories.CarRepository;
 import ru.bstu.itz212.fokin.lab5.utils.TablesConfigurer;
 
 import java.io.FileInputStream;
@@ -24,8 +28,18 @@ public class Main {
             String url = String.format("%s?user=%s&password=%s", host, username, password);
             connection = DriverManager.getConnection(url);
 
+            CarRepository carRepository = new CarRepository(connection);
+            CarOwnerRepository carOwnerRepository = new CarOwnerRepository(connection);
+
             TablesConfigurer tc = new TablesConfigurer(connection);
             tc.createTablesIfNotExists();
+
+            CarOwner carOwner = new CarOwner();
+            carOwner.setGender(true);
+
+
+            Car car = new Car();
+
 
             connection.close();
         } catch (IOException e) {

@@ -2,7 +2,13 @@ package ru.bstu.itz212.fokin.lab5.repositories;
 
 import ru.bstu.itz212.fokin.lab5.models.CarOwner;
 
+import java.sql.Connection;
+
 public class CarOwnerRepository extends CrudRepository<CarOwner> {
+    public CarOwnerRepository(Connection connection) {
+        super(connection);
+    }
+
     @Override
     public int create(CarOwner carOwner) {
         return 0;
