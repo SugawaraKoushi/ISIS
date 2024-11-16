@@ -1,5 +1,6 @@
 package ru.bstu.itz212.fokin.lab5;
 
+import ru.bstu.itz212.fokin.lab5.utils.TablesConfigurer;
 
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -22,6 +23,9 @@ public class Main {
             String password = props.getProperty("password");
             String url = String.format("%s?user=%s&password=%s", host, username, password);
             connection = DriverManager.getConnection(url);
+
+            TablesConfigurer tc = new TablesConfigurer(connection);
+            tc.createTablesIfNotExists();
 
             connection.close();
         } catch (IOException e) {
