@@ -11,13 +11,25 @@ public class CarRepository extends CrudRepository<Car> {
 
     @Override
     public Car create(Car car) {
-        String query = String.format("""
+        String query;
+
+        if (car.getId() > 0) {
+            query = String.format("""
+                INSERT INTO public."Cars"("Id", "Brand", "Model", "Color", "LicensePlate",
+                    "OwnerLastName", "OwnerFirstName", "OwnerMiddleName")
+                VALUES (%d, '%s', '%s', '%s', '%s', '%s', '%s', '%s');
+                """, car.getId(), car.getBrand(), car.getModel(), car.getColor(),
+                    car.getLicensePlate(), car.getOwnerLastName(),
+                    car.getOwnerFirstName(), car.getOwnerMiddleName());
+        } else {
+            query = String.format("""
                 INSERT INTO public."Cars"("Brand", "Model", "Color", "LicensePlate",
                     "OwnerLastName", "OwnerFirstName", "OwnerMiddleName")
                 VALUES ('%s', '%s', '%s', '%s', '%s', '%s', '%s');
                 """, car.getBrand(), car.getModel(), car.getColor(),
-                car.getLicensePlate(), car.getOwnerLastName(),
-                car.getOwnerFirstName(), car.getOwnerMiddleName());
+                    car.getLicensePlate(), car.getOwnerLastName(),
+                    car.getOwnerFirstName(), car.getOwnerMiddleName());
+        }
 
         try (PreparedStatement statement = super
                 .getConnection()

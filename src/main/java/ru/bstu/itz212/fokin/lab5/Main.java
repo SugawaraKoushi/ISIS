@@ -11,9 +11,11 @@ import javax.xml.parsers.SAXParserFactory;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.net.URL;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
+import java.util.List;
 import java.util.Properties;
 
 public class Main {
@@ -49,16 +51,18 @@ public class Main {
             SAXParserFactory factory = SAXParserFactory.newInstance();
             SAXParser parser = factory.newSAXParser();
             CarHandler carHandler = new CarHandler();
-            parser.parse(input, carHandler);
+            URL carsXMl = Main.class.getResource("/Cars.xml");
+            parser.parse(carsXMl.getFile(), carHandler);
+
+            List<Car> cars = carHandler.getCars();
+            for(Car car : cars) {
+                carRepository.create(car);
+            }
 
             connection.close();
         } catch (IOException e) {
             e.printStackTrace();
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        } catch (ParserConfigurationException e) {
-            throw new RuntimeException(e);
-        } catch (SAXException e) {
+        } catch (SQLException | ParserConfigurationException | SAXException e) {
             throw new RuntimeException(e);
         }
     }
