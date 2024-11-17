@@ -1,11 +1,13 @@
 package ru.bstu.itz212.fokin.lab5;
 
+import org.xml.sax.SAXException;
 import ru.bstu.itz212.fokin.lab5.models.Car;
-import ru.bstu.itz212.fokin.lab5.models.CarOwner;
-import ru.bstu.itz212.fokin.lab5.repositories.CarOwnerRepository;
 import ru.bstu.itz212.fokin.lab5.repositories.CarRepository;
-import ru.bstu.itz212.fokin.lab5.utils.TablesConfigurer;
+import ru.bstu.itz212.fokin.lab5.utils.TablesConfigure;
 
+import javax.xml.parsers.ParserConfigurationException;
+import javax.xml.parsers.SAXParser;
+import javax.xml.parsers.SAXParserFactory;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -27,24 +29,36 @@ public class Main {
             String password = props.getProperty("password");
             String url = String.format("%s?user=%s&password=%s", host, username, password);
             connection = DriverManager.getConnection(url);
-
             CarRepository carRepository = new CarRepository(connection);
-            CarOwnerRepository carOwnerRepository = new CarOwnerRepository(connection);
-
-            TablesConfigurer tc = new TablesConfigurer(connection);
+            TablesConfigure tc = new TablesConfigure(connection);
             tc.createTablesIfNotExists();
 
-            CarOwner carOwner = new CarOwner();
-            carOwner.setGender(true);
+//            Car car = new Car();
+//            car.setBrand("Toyota");
+//            car.setModel("Camry");
+//            car.setColor("Black");
+//            car.setLicensePlate("А757КЕ51");
+//            car.setOwnerLastName("Иванов");
+//            car.setOwnerFirstName("Иван");
+//            car.setOwnerMiddleName("Иванович");
+//            car = carRepository.create(car);
+//
+//            car.setModel("Lada");
+//            carRepository.update(car);
 
-
-            Car car = new Car();
-
+            SAXParserFactory factory = SAXParserFactory.newInstance();
+            SAXParser parser = factory.newSAXParser();
+            CarHandler carHandler = new CarHandler();
+            parser.parse(input, carHandler);
 
             connection.close();
         } catch (IOException e) {
             e.printStackTrace();
         } catch (SQLException e) {
+            throw new RuntimeException(e);
+        } catch (ParserConfigurationException e) {
+            throw new RuntimeException(e);
+        } catch (SAXException e) {
             throw new RuntimeException(e);
         }
     }

@@ -14,8 +14,8 @@ public abstract class CrudRepository<T> {
         return connection;
     }
 
-    public abstract int create(T t);
+    public abstract T create(T t);
     public abstract T get(int id);
-    public abstract int update(T t);
-    public abstract int delete(int id);
+    public abstract void update(T t);
+    public abstract void delete(int id);
 }

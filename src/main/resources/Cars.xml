@@ -5,7 +5,7 @@
         <model>Camry</model>
         <color>Black</color>
         <licensePlate>А123ВЕ78</licensePlate>
-        <owner gender="male">
+        <owner>
             <lastName>Иванов</lastName>
             <firstName>Иван</firstName>
             <middleName>Иванович</middleName>
@@ -16,7 +16,7 @@
         <model>X5</model>
         <color>Silver</color>
         <licensePlate>К456МУ90</licensePlate>
-        <owner gender="female">
+        <owner>
             <lastName>Петрова</lastName>
             <firstName>Анна</firstName>
             <middleName>Павловна</middleName>

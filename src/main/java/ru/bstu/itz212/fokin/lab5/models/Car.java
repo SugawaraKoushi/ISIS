@@ -6,7 +6,9 @@ public class Car {
     private String model;
     private String color;
     private String licensePlate;
-    private int ownerId;
+    private String ownerLastName;
+    private String ownerFirstName;
+    private String ownerMiddleName;
 
     public int getId() {
         return id;
@@ -48,11 +50,27 @@ public class Car {
         this.licensePlate = licensePlate;
     }
 
-    public int getOwnerId() {
-        return ownerId;
+    public String getOwnerLastName() {
+        return ownerLastName;
     }
 
-    public void setOwnerId(int ownerId) {
-        this.ownerId = ownerId;
+    public void setOwnerLastName(String ownerLastName) {
+        this.ownerLastName = ownerLastName;
+    }
+
+    public String getOwnerFirstName() {
+        return ownerFirstName;
+    }
+
+    public void setOwnerFirstName(String ownerFirstName) {
+        this.ownerFirstName = ownerFirstName;
+    }
+
+    public String getOwnerMiddleName() {
+        return ownerMiddleName;
+    }
+
+    public void setOwnerMiddleName(String ownerMiddleName) {
+        this.ownerMiddleName = ownerMiddleName;
     }
 }

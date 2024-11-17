@@ -4,10 +4,10 @@ import java.sql.Connection;
 import java.sql.SQLException;
 import java.sql.Statement;
 
-public class TablesConfigurer {
-    private Connection connection;
+public class TablesConfigure {
+    private final Connection connection;
 
-    public TablesConfigurer(Connection connection) {
+    public TablesConfigure(Connection connection) {
         this.connection = connection;
     }
 
@@ -17,18 +17,15 @@ public class TablesConfigurer {
             String createCarsTableQuery = """
                     CREATE TABLE IF NOT EXISTS "Cars"
                     (
-                        "Id" integer NOT NULL,
+                        "Id" SERIAL NOT NULL,
                         "Brand" text NOT NULL,
                         "Model" text NOT NULL,
                         "Color" text NOT NULL,
-                        "LicensePlate" character varying(9)[] NOT NULL,
-                        "OwnerId" integer NOT NULL,
-                        PRIMARY KEY ("Id"),
-                        FOREIGN KEY ("OwnerId")
-                            REFERENCES public."CarOwners" ("Id") MATCH SIMPLE
-                            ON UPDATE NO ACTION
-                            ON DELETE NO ACTION
-                            NOT VALID
+                        "LicensePlate" text NOT NULL,
+                        "OwnerLastName" text NOT NULL,
+                        "OwnerFirstName" text NOT NULL,
+                        "OwnerMiddleName" text,
+                        PRIMARY KEY ("Id")
                     )
                     """;
 
@@ -44,7 +41,6 @@ public class TablesConfigurer {
                     );
                     """;
 
-            statement.execute(createCarOwnersTableQuery);
             statement.execute(createCarsTableQuery);
         } catch (SQLException e) {
             throw new RuntimeException(e);

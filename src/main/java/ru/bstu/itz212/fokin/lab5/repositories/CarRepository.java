@@ -2,34 +2,37 @@ package ru.bstu.itz212.fokin.lab5.repositories;
 
 import ru.bstu.itz212.fokin.lab5.models.Car;
 
-import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.sql.*;
 
-public class CarRepository extends CrudRepository<Car>{
+public class CarRepository extends CrudRepository<Car> {
     public CarRepository(Connection connection) {
         super(connection);
     }
 
     @Override
-    public int create(Car car) {
-        String query = """
-                INSERT INTO public."Cars"("Brand", "Model", "Color", "LicensePlate", "OwnerId")
-                VALUES (%d, %s, %s, %s, %s, %d);
-                """;
+    public Car create(Car car) {
+        String query = String.format("""
+                INSERT INTO public."Cars"("Brand", "Model", "Color", "LicensePlate",
+                    "OwnerLastName", "OwnerFirstName", "OwnerMiddleName")
+                VALUES ('%s', '%s', '%s', '%s', '%s', '%s', '%s');
+                """, car.getBrand(), car.getModel(), car.getColor(),
+                car.getLicensePlate(), car.getOwnerLastName(),
+                car.getOwnerFirstName(), car.getOwnerMiddleName());
 
-        try (Statement statement = super.getConnection().createStatement()) {
-            statement.execute(String.format(query,
-                    car.getId(), car.getBrand(), car.getModel(),
-                    car.getColor(), car.getLicensePlate(), car.getOwnerId())
-            );
+        try (PreparedStatement statement = super
+                .getConnection()
+                .prepareStatement(query, Statement.RETURN_GENERATED_KEYS)) {
+            statement.executeUpdate();
+            ResultSet generatedKeys = statement.getGeneratedKeys();
+
+            if (generatedKeys.next()) {
+                car.setId(generatedKeys.getInt(1));
+            }
         } catch (SQLException e) {
             e.printStackTrace();
-            return -1;
         }
 
-        return car.getId();
+        return car;
     }
 
     @Override
@@ -48,7 +51,10 @@ public class CarRepository extends CrudRepository<Car>{
             car.setModel(rs.getString("Model"));
             car.setColor(rs.getString("Color"));
             car.setLicensePlate(rs.getString("LicensePlate"));
-            car.setOwnerId(rs.getInt("OwnerId"));
+            car.setOwnerLastName(rs.getString("OwnerLastName"));
+            car.setOwnerFirstName(rs.getString("OwnerFirstName"));
+            car.setOwnerMiddleName(rs.getString("OwnerMiddleName"));
+            rs.close();
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
@@ -57,40 +63,36 @@ public class CarRepository extends CrudRepository<Car>{
     }
 
     @Override
-    public int update(Car car) {
+    public void update(Car car) {
         String query = """
                 UPDATE public."Cars"
-                SET "Brand"=%s, "Model"=%s, "Color"=%s, "LicensePlate"=%s, "OwnerId"=%d
-                WHERE Id=%d;
+                SET "Brand"='%s', "Model"='%s', "Color"='%s', "LicensePlate"='%s',
+                    "OwnerLastName"='%s', "OwnerFirstName"='%s', "OwnerMiddleName"='%s'
+                WHERE "Id"=%d;
                 """;
 
         try (Statement statement = super.getConnection().createStatement()) {
             statement.execute(String.format(query,
                     car.getBrand(), car.getModel(), car.getColor(),
-                    car.getLicensePlate(), car.getOwnerId(), car.getId())
+                    car.getLicensePlate(), car.getOwnerLastName(),
+                    car.getOwnerFirstName(), car.getOwnerMiddleName(), car.getId())
             );
         } catch (SQLException e) {
             e.printStackTrace();
-            return -1;
         }
-
-        return car.getId();
     }
 
     @Override
-    public int delete(int id) {
+    public void delete(int id) {
         String query = """
                 DELETE FROM public."Cars"
-                WHERE Id=%d;
+                WHERE "Id"=%d;
                 """;
 
         try (Statement statement = super.getConnection().createStatement()) {
             statement.execute(String.format(query, id));
         } catch (SQLException e) {
             e.printStackTrace();
-            return -1;
         }
-
-        return id;
     }
 }
