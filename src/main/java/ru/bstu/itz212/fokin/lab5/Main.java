@@ -55,9 +55,13 @@ public class Main {
             parser.parse(carsXMl.getFile(), carHandler);
 
             List<Car> cars = carHandler.getCars();
-            for(Car car : cars) {
-                carRepository.create(car);
-            }
+
+            CarDomWriter writer = new CarDomWriter(cars);
+            writer.writeToFile("./Cars_new.xml");
+
+//            for(Car car : cars) {
+//                carRepository.create(car);
+//            }
 
             connection.close();
         } catch (IOException e) {

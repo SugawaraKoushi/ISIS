@@ -9,16 +9,16 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class CarHandler extends DefaultHandler {
-    private static final String CARS = "Cars";
-    private static final String CAR = "Car";
-    private static final String BRAND = "Brand";
-    private static final String MODEL = "MODEL";
+    private static final String CARS = "cars";
+    private static final String CAR = "car";
+    private static final String BRAND = "brand";
+    private static final String MODEL = "model";
+    private static final String COLOR = "color";
     private static final String LICENSE_PLATE = "licensePlate";
-    private static final String OWNER = "OWNER";
+    private static final String OWNER = "owner";
     private static final String LAST_NAME = "lastName";
     private static final String FIRST_NAME = "firstName";
     private static final String MIDDLE_NAME = "middleName";
-    private static final String ID = "id";
 
     private String element;
     private Car car = null;
@@ -49,7 +49,7 @@ public class CarHandler extends DefaultHandler {
                 cars = new ArrayList<>();
                 break;
             case CAR:
-                if (car != null) {
+                if (car == null) {
                     car = new Car();
                 }
                 break;
@@ -58,6 +58,9 @@ public class CarHandler extends DefaultHandler {
                 break;
             case MODEL:
                 car.setModel(new String(ch, start, length));
+                break;
+            case COLOR:
+                car.setColor(new String(ch, start, length));
                 break;
             case LICENSE_PLATE:
                 car.setLicensePlate(new String(ch, start, length));
@@ -79,13 +82,20 @@ public class CarHandler extends DefaultHandler {
 
     @Override
     public void endElement(String uri, String localName, String qName) throws SAXException {
-        cars.add(car);
-        car = null;
+        if (qName.equals(CAR)) {
+            cars.add(car);
+            car = null;
+        }
+
         element = "";
     }
 
     @Override
     public void endDocument() throws SAXException {
         System.out.println("Обработка XML-файла закончена");
+    }
+
+    public List<Car> getCars() {
+        return cars;
     }
 }
