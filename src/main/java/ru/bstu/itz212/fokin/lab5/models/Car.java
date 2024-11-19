@@ -1,5 +1,9 @@
 package ru.bstu.itz212.fokin.lab5.models;
 
+import java.util.Scanner;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 public class Car {
     private int id;
     private String brand;
@@ -9,6 +13,38 @@ public class Car {
     private String ownerLastName;
     private String ownerFirstName;
     private String ownerMiddleName;
+
+    private static final Pattern LICENSE_PLATE_PATTERN = Pattern.compile("[А-Яа-яЁё]\\d{3}[А-Яа-яЁё]{2}\\d{2,3}");
+
+    public void init(Scanner scanner) {
+        System.out.print("Введите марку: ");
+        brand = scanner.nextLine();
+        System.out.print("Введите модель: ");
+        model = scanner.nextLine();
+        System.out.print("Введите цвет: ");
+        color = scanner.nextLine();
+
+        Matcher matcher;
+        do {
+            System.out.print("Введите автомобильный номер: ");
+            licensePlate = scanner.nextLine();
+            matcher = LICENSE_PLATE_PATTERN.matcher(licensePlate);
+        } while (!matcher.find());
+
+        System.out.println("Введите данные владельца");
+        System.out.print("Фамилия: ");
+        ownerLastName = scanner.nextLine();
+        System.out.print("Имя: ");
+        ownerFirstName = scanner.nextLine();
+        System.out.print("Отчество: ");
+        ownerMiddleName = scanner.nextLine();
+    }
+
+    @Override
+    public String toString() {
+        String owner = String.format("%s %s %s", ownerLastName, ownerFirstName, ownerMiddleName);
+        return String.format("%-5d|%20s|%20s|%20s|%20s|%40s", id, brand, model, color, licensePlate, owner);
+    }
 
     public int getId() {
         return id;
