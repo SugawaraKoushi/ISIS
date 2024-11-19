@@ -1,8 +1,12 @@
 package ru.bstu.itz212.fokin.lab5.repositories;
 
 import ru.bstu.itz212.fokin.lab5.models.Car;
+import ru.bstu.itz212.fokin.lab5.utils.CarSearchParams;
 
 import java.sql.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collectors;
 
 public class CarRepository extends CrudRepository<Car> {
     public CarRepository(Connection connection) {
@@ -106,5 +110,88 @@ public class CarRepository extends CrudRepository<Car> {
         } catch (SQLException e) {
             e.printStackTrace();
         }
+    }
+
+    public List<Car> getCars(CarSearchParams params) {
+        StringBuilder sb = new StringBuilder();
+        sb.append("SELECT * FROM public.\"Cars\" WHERE");
+        List<Car> cars = new ArrayList<>();
+
+        if (params == null) {
+            return cars;
+        }
+
+        if (params.getIds() != null && !params.getIds().isEmpty()) {
+            String ids = params.getIds().stream().map(String::valueOf).collect(Collectors.joining(", "));
+            sb.append(String.format("%n\"Id\" in (%s) AND", ids));
+        }
+
+        if (params.getBrands() != null && !params.getBrands().isEmpty()) {
+            String brands = params.getBrands().stream()
+                    .map(String::valueOf).collect(Collectors.joining("', '"));
+            sb.append(String.format("%n\"Brand\" in ('%s') AND", brands));
+        }
+
+        if (params.getModels() != null && !params.getModels().isEmpty()) {
+            String models = params.getModels().stream()
+                    .map(String::valueOf).collect(Collectors.joining("', '"));
+            sb.append(String.format("%n\"Model\" in ('%s') AND", models));
+        }
+
+        if (params.getColors() != null && !params.getColors().isEmpty()) {
+            String colors = params.getColors().stream()
+                    .map(String::valueOf).collect(Collectors.joining("', '"));
+            sb.append(String.format("%n\"Color\" in ('%s') AND", colors));
+        }
+
+        if (params.getLicensePlates() != null && !params.getLicensePlates().isEmpty()) {
+            String plates = params.getLicensePlates().stream()
+                    .map(String::valueOf).collect(Collectors.joining("', '"));
+            sb.append(String.format("%n\"LicensePlate\" in ('%s') AND", plates));
+        }
+
+        if (params.getOwnersLastNames() != null && !params.getOwnersLastNames().isEmpty()) {
+            String lastNames = params.getOwnersLastNames().stream()
+                    .map(String::valueOf).collect(Collectors.joining("', '"));
+            sb.append(String.format("%n\"Color\" in ('%s') AND", lastNames));
+        }
+
+        if (params.getOwnersFirstNames() != null && !params.getOwnersFirstNames().isEmpty()) {
+            String firstNames = params.getOwnersFirstNames().stream()
+                    .map(String::valueOf).collect(Collectors.joining("', '"));
+            sb.append(String.format("%n\"Color\" in ('%s') AND", firstNames));
+        }
+
+        if (params.getOwnersMiddleNames() != null && !params.getOwnersMiddleNames().isEmpty()) {
+            String middleNames = params.getOwnersMiddleNames().stream()
+                    .map(String::valueOf).collect(Collectors.joining("', '"));
+            sb.append(String.format("%n\"Color\" in ('%s') AND", middleNames));
+        }
+
+        sb.delete(sb.toString().length() - 4, sb.toString().length());
+        String query = sb.toString();
+
+        try (Statement statement = super.getConnection().createStatement()) {
+            ResultSet rs = statement.executeQuery(query);
+
+            while (rs.next()) {
+                Car car = new Car();
+                car.setId(rs.getInt("Id"));
+                car.setBrand(rs.getString("Brand"));
+                car.setModel(rs.getString("Model"));
+                car.setColor(rs.getString("Color"));
+                car.setLicensePlate(rs.getString("LicensePlate"));
+                car.setOwnerLastName(rs.getString("OwnerLastName"));
+                car.setOwnerFirstName(rs.getString("OwnerFirstName"));
+                car.setOwnerMiddleName(rs.getString("OwnerMiddleName"));
+                cars.add(car);
+            }
+
+            rs.close();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+
+        return cars;
     }
 }

@@ -1,4 +1,4 @@
-package ru.bstu.itz212.fokin.lab5;
+package ru.bstu.itz212.fokin.lab5.utils;
 
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;

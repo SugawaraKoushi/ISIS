@@ -3,6 +3,8 @@ package ru.bstu.itz212.fokin.lab5;
 import org.xml.sax.SAXException;
 import ru.bstu.itz212.fokin.lab5.models.Car;
 import ru.bstu.itz212.fokin.lab5.repositories.CarRepository;
+import ru.bstu.itz212.fokin.lab5.utils.CarHandler;
+import ru.bstu.itz212.fokin.lab5.utils.CarSearchParams;
 import ru.bstu.itz212.fokin.lab5.utils.TablesConfigure;
 
 import javax.xml.parsers.ParserConfigurationException;
@@ -15,6 +17,8 @@ import java.net.URL;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Properties;
 
@@ -56,12 +60,19 @@ public class Main {
 
             List<Car> cars = carHandler.getCars();
 
-            CarDomWriter writer = new CarDomWriter(cars);
-            writer.writeToFile("./Cars_new.xml");
+//            CarDomWriter writer = new CarDomWriter(cars);
+//            writer.writeToFile("./Cars_new.xml");
 
-//            for(Car car : cars) {
-//                carRepository.create(car);
-//            }
+            for(Car car : cars) {
+                carRepository.create(car);
+            }
+
+            CarSearchParams params = new CarSearchParams();
+//            Integer[] ids = new Integer[] {1, 2};
+//            params.setIds(Arrays.asList(ids));
+            String[] brands = new String[] {"Toyota", "BMW"};
+            params.setBrands(Arrays.asList(brands));
+            cars = carRepository.getCars(params);
 
             connection.close();
         } catch (IOException e) {

@@ -21,11 +21,12 @@ public class TablesConfigure {
                         "Brand" text NOT NULL,
                         "Model" text NOT NULL,
                         "Color" text NOT NULL,
-                        "LicensePlate" text NOT NULL,
+                        "LicensePlate" varchar(9) NOT NULL,
                         "OwnerLastName" text NOT NULL,
                         "OwnerFirstName" text NOT NULL,
                         "OwnerMiddleName" text,
-                        PRIMARY KEY ("Id")
+                        PRIMARY KEY ("Id"),
+                        UNIQUE ("LicensePlate")
                     )
                     """;
 
