@@ -61,15 +61,7 @@ public class CarRepository extends CrudRepository<Car> {
 
         try (Statement statement = super.getConnection().createStatement()) {
             ResultSet rs = statement.executeQuery(String.format(query, id));
-            car = new Car();
-            car.setId(rs.getInt("Id"));
-            car.setBrand(rs.getString("Brand"));
-            car.setModel(rs.getString("Model"));
-            car.setColor(rs.getString("Color"));
-            car.setLicensePlate(rs.getString("LicensePlate"));
-            car.setOwnerLastName(rs.getString("OwnerLastName"));
-            car.setOwnerFirstName(rs.getString("OwnerFirstName"));
-            car.setOwnerMiddleName(rs.getString("OwnerMiddleName"));
+            car = parseRow(rs);
             rs.close();
         } catch (SQLException e) {
             throw new RuntimeException(e);
@@ -126,47 +118,13 @@ public class CarRepository extends CrudRepository<Car> {
             sb.append(String.format("%n\"Id\" in (%s) AND", ids));
         }
 
-        if (params.getBrands() != null && !params.getBrands().isEmpty()) {
-            String brands = params.getBrands().stream()
-                    .map(String::valueOf).collect(Collectors.joining("', '"));
-            sb.append(String.format("%n\"Brand\" in ('%s') AND", brands));
-        }
-
-        if (params.getModels() != null && !params.getModels().isEmpty()) {
-            String models = params.getModels().stream()
-                    .map(String::valueOf).collect(Collectors.joining("', '"));
-            sb.append(String.format("%n\"Model\" in ('%s') AND", models));
-        }
-
-        if (params.getColors() != null && !params.getColors().isEmpty()) {
-            String colors = params.getColors().stream()
-                    .map(String::valueOf).collect(Collectors.joining("', '"));
-            sb.append(String.format("%n\"Color\" in ('%s') AND", colors));
-        }
-
-        if (params.getLicensePlates() != null && !params.getLicensePlates().isEmpty()) {
-            String plates = params.getLicensePlates().stream()
-                    .map(String::valueOf).collect(Collectors.joining("', '"));
-            sb.append(String.format("%n\"LicensePlate\" in ('%s') AND", plates));
-        }
-
-        if (params.getOwnersLastNames() != null && !params.getOwnersLastNames().isEmpty()) {
-            String lastNames = params.getOwnersLastNames().stream()
-                    .map(String::valueOf).collect(Collectors.joining("', '"));
-            sb.append(String.format("%n\"Color\" in ('%s') AND", lastNames));
-        }
-
-        if (params.getOwnersFirstNames() != null && !params.getOwnersFirstNames().isEmpty()) {
-            String firstNames = params.getOwnersFirstNames().stream()
-                    .map(String::valueOf).collect(Collectors.joining("', '"));
-            sb.append(String.format("%n\"Color\" in ('%s') AND", firstNames));
-        }
-
-        if (params.getOwnersMiddleNames() != null && !params.getOwnersMiddleNames().isEmpty()) {
-            String middleNames = params.getOwnersMiddleNames().stream()
-                    .map(String::valueOf).collect(Collectors.joining("', '"));
-            sb.append(String.format("%n\"Color\" in ('%s') AND", middleNames));
-        }
+        sb.append(getWhereParam(params.getBrands(), "Brand"));
+        sb.append(getWhereParam(params.getModels(), "Model"));
+        sb.append(getWhereParam(params.getColors(), "Color"));
+        sb.append(getWhereParam(params.getLicensePlates(), "LicensePlate"));
+        sb.append(getWhereParam(params.getOwnersLastNames(), "OwnerLastName"));
+        sb.append(getWhereParam(params.getOwnersFirstNames(), "OwnerFirstName"));
+        sb.append(getWhereParam(params.getOwnersMiddleNames(), "OwnerMiddleName"));
 
         sb.delete(sb.toString().length() - 4, sb.toString().length());
         String query = sb.toString();
@@ -175,15 +133,7 @@ public class CarRepository extends CrudRepository<Car> {
             ResultSet rs = statement.executeQuery(query);
 
             while (rs.next()) {
-                Car car = new Car();
-                car.setId(rs.getInt("Id"));
-                car.setBrand(rs.getString("Brand"));
-                car.setModel(rs.getString("Model"));
-                car.setColor(rs.getString("Color"));
-                car.setLicensePlate(rs.getString("LicensePlate"));
-                car.setOwnerLastName(rs.getString("OwnerLastName"));
-                car.setOwnerFirstName(rs.getString("OwnerFirstName"));
-                car.setOwnerMiddleName(rs.getString("OwnerMiddleName"));
+                Car car = parseRow(rs);
                 cars.add(car);
             }
 
@@ -203,15 +153,7 @@ public class CarRepository extends CrudRepository<Car> {
             ResultSet rs = statement.executeQuery(query);
 
             while (rs.next()) {
-                Car car = new Car();
-                car.setId(rs.getInt("Id"));
-                car.setBrand(rs.getString("Brand"));
-                car.setModel(rs.getString("Model"));
-                car.setColor(rs.getString("Color"));
-                car.setLicensePlate(rs.getString("LicensePlate"));
-                car.setOwnerLastName(rs.getString("OwnerLastName"));
-                car.setOwnerFirstName(rs.getString("OwnerFirstName"));
-                car.setOwnerMiddleName(rs.getString("OwnerMiddleName"));
+                Car car = parseRow(rs);
                 cars.add(car);
             }
 
@@ -221,5 +163,28 @@ public class CarRepository extends CrudRepository<Car> {
         }
 
         return cars;
+    }
+
+    private Car parseRow(ResultSet rs) throws SQLException {
+        Car car = new Car();
+        car.setId(rs.getInt("Id"));
+        car.setBrand(rs.getString("Brand"));
+        car.setModel(rs.getString("Model"));
+        car.setColor(rs.getString("Color"));
+        car.setLicensePlate(rs.getString("LicensePlate"));
+        car.setOwnerLastName(rs.getString("OwnerLastName"));
+        car.setOwnerFirstName(rs.getString("OwnerFirstName"));
+        car.setOwnerMiddleName(rs.getString("OwnerMiddleName"));
+        return car;
+    }
+
+    private String getWhereParam(List<String> param, String paramName) {
+        if (param != null && !param.isEmpty()) {
+            String params = param.stream()
+                    .map(String::valueOf).collect(Collectors.joining("', '"));
+            return String.format("%n\"%s\" in ('%s') AND", paramName, params);
+        }
+
+        return "";
     }
 }
