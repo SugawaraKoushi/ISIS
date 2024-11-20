@@ -112,7 +112,7 @@ public class CarRepository extends CrudRepository<Car> {
         }
     }
 
-    public List<Car> getCars(CarSearchParams params) {
+    public List<Car> getByParams(CarSearchParams params) {
         StringBuilder sb = new StringBuilder();
         sb.append("SELECT * FROM public.\"Cars\" WHERE");
         List<Car> cars = new ArrayList<>();
@@ -170,6 +170,34 @@ public class CarRepository extends CrudRepository<Car> {
 
         sb.delete(sb.toString().length() - 4, sb.toString().length());
         String query = sb.toString();
+
+        try (Statement statement = super.getConnection().createStatement()) {
+            ResultSet rs = statement.executeQuery(query);
+
+            while (rs.next()) {
+                Car car = new Car();
+                car.setId(rs.getInt("Id"));
+                car.setBrand(rs.getString("Brand"));
+                car.setModel(rs.getString("Model"));
+                car.setColor(rs.getString("Color"));
+                car.setLicensePlate(rs.getString("LicensePlate"));
+                car.setOwnerLastName(rs.getString("OwnerLastName"));
+                car.setOwnerFirstName(rs.getString("OwnerFirstName"));
+                car.setOwnerMiddleName(rs.getString("OwnerMiddleName"));
+                cars.add(car);
+            }
+
+            rs.close();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+
+        return cars;
+    }
+
+    public List<Car> getAll() {
+        String query = "SELECT * FROM public.\"Cars\"";
+        List<Car> cars = new ArrayList<>();
 
         try (Statement statement = super.getConnection().createStatement()) {
             ResultSet rs = statement.executeQuery(query);
