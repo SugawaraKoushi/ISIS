@@ -27,21 +27,72 @@ public class Main {
         Connection connection;
 
         try {
-            connection = setConnection();
+            connection = setConnection(props);
             CarRepository carRepository = new CarRepository(connection);
             TablesConfigure tc = new TablesConfigure(connection);
             tc.createTablesIfNotExists();
             Scanner scanner = new Scanner(System.in);
-            int actionType = chooseAction(scanner);
+            int actionType = getAction(scanner);
 
             if (actionType == 1) {  // Ввод данных
-                int formatType = chooseFormatType(scanner);
-                int operationType = chooseOperationType(scanner);
+                int formatType = getFormatType(scanner);
+                int operationType = getOperationType(scanner);
 
                 if (formatType == 1) {  // БД
+                    switch (operationType) {
+                        case 1: {
+                            int optionType = getCarsByOption(scanner);
+                            break;
+                        }
+                        case 2: {
+                            Car car = new Car();
+                            car.init(scanner);
+                            car = carRepository.create(car);
+                            System.out.println(car);
+                        }
+                        case 3: {
+                            System.out.print("Введите id автомобиля: ");
+                            int id = scanner.nextInt();
+                            Car car = carRepository.get(id);
+                            boolean stop = false;
 
+                            do {
+                                int field = getCarFieldToChange(scanner);
+                                switch (field) {
+                                    case 1:
+                                        car.setBrand(scanner.nextLine());
+                                        break;
+                                    case 2:
+                                        car.setModel(scanner.nextLine());
+                                        break;
+                                    case 3:
+                                        car.setColor(scanner.nextLine());
+                                        break;
+                                    case 4:
+                                        car.setLicensePlate(scanner.nextLine());
+                                        break;
+                                    case 5:
+                                        car.setOwnerLastName(scanner.nextLine());
+                                        break;
+                                    case 6:
+                                        car.setOwnerFirstName(scanner.nextLine());
+                                        break;
+                                    case 7:
+                                        car.setOwnerMiddleName(scanner.nextLine());
+                                        break;
+                                    case 0:
+                                        stop = true;
+                                }
+                            } while (!stop);
+                        }
+
+
+                    }
                 } else {    // xml
                     System.out.println("Создайте файл и назовите его \"Cars.xml\"");
+                    System.out.println("Нажмите любую клавишу для продолжения...");
+                    scanner.next();
+                    // ожидание пока пользователь нажмет что-то
                     String importFolderPath = props.getProperty("importFolder");
                     File file = new File(importFolderPath + "Cars.xml");
                     SAXParserFactory factory = SAXParserFactory.newInstance();
@@ -50,7 +101,6 @@ public class Main {
                     parser.parse(file, handler);
                     List<Car> cars = handler.getCars();
                 }
-
             } else {    // Вывод данных в xml
                 List<Car> cars = carRepository.getAll();
                 CarDomWriter writer = new CarDomWriter(cars);
@@ -58,38 +108,6 @@ public class Main {
                 writer.writeToFile(exportFolderPath + "Car_export.xml");
             }
 
-
-
-
-
-//            Car car = new Car();
-//            car.setBrand("Toyota");
-//            car.setModel("Camry");
-//            car.setColor("Black");
-//            car.setLicensePlate("А757КЕ51");
-//            car.setOwnerLastName("Иванов");
-//            car.setOwnerFirstName("Иван");
-//            car.setOwnerMiddleName("Иванович");
-//            car = carRepository.create(car);
-//
-//            car.setModel("Lada");
-//            carRepository.update(car);
-
-//            SAXParserFactory factory = SAXParserFactory.newInstance();
-//            SAXParser parser = factory.newSAXParser();
-//            CarHandler carHandler = new CarHandler();
-//            URL carsXMl = Main.class.getResource("/Cars.xml");
-//            parser.parse(carsXMl.getFile(), carHandler);
-//
-//            List<Car> cars = carHandler.getCars();
-//
-//            CarDomWriter writer = new CarDomWriter(cars);
-//            writer.writeToFile("./Cars_new.xml");
-//
-//            for(Car car : cars) {
-//                carRepository.create(car);
-//            }
-//
 //            CarSearchParams params = new CarSearchParams();
 //            Integer[] ids = new Integer[] {1, 2};
 //            params.setIds(Arrays.asList(ids));
@@ -108,8 +126,8 @@ public class Main {
         }
     }
 
-    private static Connection setConnection() throws SQLException {
-        Properties props = new Properties();
+    private static Connection setConnection(Properties props) throws SQLException {
+        props = new Properties();
         Connection connection = null;
 
         try (InputStream input = new FileInputStream("config.properties")) {
@@ -127,7 +145,7 @@ public class Main {
         return connection;
     }
 
-    private static int chooseAction(Scanner scanner) {
+    private static int getAction(Scanner scanner) {
         int actionType;
 
         do {
@@ -142,7 +160,7 @@ public class Main {
         return actionType;
     }
 
-    private static int chooseFormatType(Scanner scanner) {
+    private static int getFormatType(Scanner scanner) {
         int formatType;
 
         do {
@@ -157,18 +175,55 @@ public class Main {
         return formatType;
     }
 
-    private static int chooseOperationType(Scanner scanner) {
+    private static int getOperationType(Scanner scanner) {
         int operationType = 0;
 
         do {
             System.out.println("""
                         Выберите операцию:
-                        1. Добавление
-                        2. Редактирование
-                        3. Удаление
+                        1. Просмотр данных
+                        2. Добавление
+                        3. Редактирование
+                        4. Удаление
                         """);
             operationType = scanner.nextInt();
-        } while (operationType < 1 || operationType > 3);
+        } while (operationType < 1 || operationType > 4);
+
+        return operationType;
+    }
+
+    private static int getCarsByOption(Scanner scanner) {
+        int optionType = 0;
+
+        do {
+            System.out.println("""
+                        Выберите опцию:
+                        1. Все данные
+                        2. По критериям
+                        """);
+            optionType = scanner.nextInt();
+        } while (optionType < 1 || optionType > 2);
+
+        return optionType;
+    }
+
+    private static int getCarFieldToChange(Scanner scanner) {
+        int operationType = 0;
+
+        do {
+            System.out.println("""
+                        Выберите поле:
+                        1. Бренд
+                        2. Модель
+                        3. Цвет
+                        4. Регистрационный номер
+                        5. Фамилия владельца
+                        6. Имя владельца
+                        7. Отчество владельца
+                        0. Выход
+                        """);
+            operationType = scanner.nextInt();
+        } while (operationType < 0 || operationType > 7);
 
         return operationType;
     }
