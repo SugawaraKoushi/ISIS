@@ -61,6 +61,7 @@ public class CarRepository extends CrudRepository<Car> {
 
         try (Statement statement = super.getConnection().createStatement()) {
             ResultSet rs = statement.executeQuery(String.format(query, id));
+            rs.next();
             car = parseRow(rs);
             rs.close();
         } catch (SQLException e) {

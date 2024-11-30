@@ -63,7 +63,7 @@ public class Main {
                     List<Car> cars;
 
                     if (formatType == 1) {
-                        cars = inputCars(scanner);
+                        cars = createCarsFromManualInput(scanner);
                     } else {
                         cars = getCarsFromXml(scanner, props);
                     }
@@ -75,12 +75,12 @@ public class Main {
                     List<Car> cars;
 
                     if (formatType == 1) {
-                        cars = inputCars(scanner);
+                        cars = getCarToUpdate(scanner, carRepository);
                     } else {
                         cars = getCarsFromXml(scanner, props);
                     }
 
-                    cars.forEach(carRepository::create);
+                    cars.forEach(carRepository::update);
                     break;
                 }
                 case 4: {   // Удаление
@@ -90,81 +90,81 @@ public class Main {
             }
 
 
-            if (formatType == 1) {  // БД
-                switch (operationType) {
-                    case 1: {
-                        int optionType = getOption(scanner);
-                        List<Car> cars;
-
-                        if (optionType == 1) {  // Все записи
-                            cars = carRepository.getAll();
-                        } else {    // Выборка по полям
-                            cars = getCarsBySearchParams(scanner, carRepository);
-                        }
-
-                        System.out.println(TABLE_HEADER);
-                        cars.forEach(System.out::println);
-                        break;
-                    }
-                    case 2: {
-                        Car car = new Car();
-                        car.init(scanner);
-                        car = carRepository.create(car);
-                        System.out.println(car);
-                        break;
-                    }
-                    case 3: {
-                        System.out.print("Введите id автомобиля: ");
-                        int id = scanner.nextInt();
-                        Car car = carRepository.get(id);
-                        boolean stop = false;
-
-                        do {
-                            int field = getCarFieldToChange(scanner);
-                            switch (field) {
-                                case 1:
-                                    car.setBrand(scanner.nextLine());
-                                    break;
-                                case 2:
-                                    car.setModel(scanner.nextLine());
-                                    break;
-                                case 3:
-                                    car.setColor(scanner.nextLine());
-                                    break;
-                                case 4:
-                                    car.setLicensePlate(scanner.nextLine());
-                                    break;
-                                case 5:
-                                    car.setOwnerLastName(scanner.nextLine());
-                                    break;
-                                case 6:
-                                    car.setOwnerFirstName(scanner.nextLine());
-                                    break;
-                                case 7:
-                                    car.setOwnerMiddleName(scanner.nextLine());
-                                    break;
-                                case 0:
-                                    stop = true;
-                            }
-                        } while (!stop);
-                    }
-                    case 4: {
-
-                    }
-                }
-            } else {    // xml
-                System.out.println("Создайте файл и назовите его \"Cars.xml\"");
-                System.out.println("Нажмите любую клавишу для продолжения...");
-                scanner.next();
-                // ожидание пока пользователь нажмет что-то
-                String importFolderPath = props.getProperty("importFolder");
-                File file = new File(importFolderPath + "Cars.xml");
-                SAXParserFactory factory = SAXParserFactory.newInstance();
-                SAXParser parser = factory.newSAXParser();
-                CarHandler handler = new CarHandler();
-                parser.parse(file, handler);
-                List<Car> cars = handler.getCars();
-            }
+//            if (formatType == 1) {  // БД
+//                switch (operationType) {
+//                    case 1: {
+//                        int optionType = getOption(scanner);
+//                        List<Car> cars;
+//
+//                        if (optionType == 1) {  // Все записи
+//                            cars = carRepository.getAll();
+//                        } else {    // Выборка по полям
+//                            cars = getCarsBySearchParams(scanner, carRepository);
+//                        }
+//
+//                        System.out.println(TABLE_HEADER);
+//                        cars.forEach(System.out::println);
+//                        break;
+//                    }
+//                    case 2: {
+//                        Car car = new Car();
+//                        car.init(scanner);
+//                        car = carRepository.create(car);
+//                        System.out.println(car);
+//                        break;
+//                    }
+//                    case 3: {
+//                        System.out.print("Введите id автомобиля: ");
+//                        int id = scanner.nextInt();
+//                        Car car = carRepository.get(id);
+//                        boolean stop = false;
+//
+//                        do {
+//                            int field = getCarFieldToChange(scanner);
+//                            switch (field) {
+//                                case 1:
+//                                    car.setBrand(scanner.nextLine());
+//                                    break;
+//                                case 2:
+//                                    car.setModel(scanner.nextLine());
+//                                    break;
+//                                case 3:
+//                                    car.setColor(scanner.nextLine());
+//                                    break;
+//                                case 4:
+//                                    car.setLicensePlate(scanner.nextLine());
+//                                    break;
+//                                case 5:
+//                                    car.setOwnerLastName(scanner.nextLine());
+//                                    break;
+//                                case 6:
+//                                    car.setOwnerFirstName(scanner.nextLine());
+//                                    break;
+//                                case 7:
+//                                    car.setOwnerMiddleName(scanner.nextLine());
+//                                    break;
+//                                case 0:
+//                                    stop = true;
+//                            }
+//                        } while (!stop);
+//                    }
+//                    case 4: {
+//
+//                    }
+//                }
+//            } else {    // xml
+//                System.out.println("Создайте файл и назовите его \"Cars.xml\"");
+//                System.out.println("Нажмите любую клавишу для продолжения...");
+//                scanner.next();
+//                // ожидание пока пользователь нажмет что-то
+//                String importFolderPath = props.getProperty("importFolder");
+//                File file = new File(importFolderPath + "Cars.xml");
+//                SAXParserFactory factory = SAXParserFactory.newInstance();
+//                SAXParser parser = factory.newSAXParser();
+//                CarHandler handler = new CarHandler();
+//                parser.parse(file, handler);
+//                List<Car> cars = handler.getCars();
+//            }
 
 //            CarSearchParams params = new CarSearchParams();
 //            Integer[] ids = new Integer[] {1, 2};
@@ -285,6 +285,7 @@ public class Main {
             field = scanner.nextInt();
         } while (field < 0 || field > 7);
 
+        scanner.nextLine();
         return field;
     }
 
@@ -357,7 +358,7 @@ public class Main {
         return carRepository.getByParams(params);
     }
 
-    private static List<Car> inputCars(Scanner scanner) {
+    private static List<Car> createCarsFromManualInput(Scanner scanner) {
         List<Car> cars = new ArrayList<>();
         boolean stop = false;
 
@@ -392,5 +393,48 @@ public class Main {
         CarHandler handler = new CarHandler();
         parser.parse(file, handler);
         return handler.getCars();
+    }
+
+    private static List<Car> getCarToUpdate(Scanner scanner, CarRepository carRepository) {
+        System.out.print("Введите идентификатор автомобиля для редактирования: ");
+        int id = scanner.nextInt();
+        Car car = carRepository.get(id);
+        System.out.println(TABLE_HEADER);
+        System.out.println(car);
+        boolean stop = false;
+
+        do {
+            int field = getCarFieldToChange(scanner);
+            switch (field) {
+                case 1:
+                    car.setBrand(scanner.nextLine());
+                    break;
+                case 2:
+                    car.setModel(scanner.nextLine());
+                    break;
+                case 3:
+                    car.setColor(scanner.nextLine());
+                    break;
+                case 4:
+                    car.setLicensePlate(scanner.nextLine());
+                    break;
+                case 5:
+                    car.setOwnerLastName(scanner.nextLine());
+                    break;
+                case 6:
+                    car.setOwnerFirstName(scanner.nextLine());
+                    break;
+                case 7:
+                    car.setOwnerMiddleName(scanner.nextLine());
+                    break;
+                case 0:
+                    stop = true;
+            }
+
+            System.out.println(TABLE_HEADER);
+            System.out.println(car);
+        } while (!stop);
+
+        return List.of(car);
     }
 }
