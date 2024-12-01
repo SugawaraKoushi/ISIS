@@ -92,14 +92,14 @@ public class CarRepository extends CrudRepository<Car> {
     }
 
     @Override
-    public void delete(int id) {
+    public void delete(Car car) {
         String query = """
                 DELETE FROM public."Cars"
                 WHERE "Id"=%d;
                 """;
 
         try (Statement statement = super.getConnection().createStatement()) {
-            statement.execute(String.format(query, id));
+            statement.execute(String.format(query, car.getId()));
         } catch (SQLException e) {
             e.printStackTrace();
         }

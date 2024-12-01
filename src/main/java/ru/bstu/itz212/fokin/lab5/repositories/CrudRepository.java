@@ -17,5 +17,5 @@ public abstract class CrudRepository<T> {
     public abstract T create(T t);
     public abstract T get(int id);
     public abstract void update(T t);
-    public abstract void delete(int id);
+    public abstract void delete(T t);
 }
