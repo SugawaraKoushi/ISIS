@@ -1,8 +1,8 @@
 /**
  * FileReader
- *
+ * <p>
  * version 1.0
- *
+ * <p>
  * (c) Фокин Владислав
  */
 
@@ -77,21 +77,23 @@ public class FileReader {
     }
 
     /**
-     * Определение порядкового номера месяца чтением из файла
+     * Создание месяца чтением его порядкового номера из файла
      * @param path путь к файлу
-     * @return порядковый номер месяца
+     * @return месяц
      */
-    public static int readMonthFromFile(String path) {
+    public static Month readMonthFromFile(String path) {
         File file = new File(path);
-        int month = -1;
+        int month = 0;
         Scanner sc = null;
 
         try {
             sc = new Scanner(file);
 
-            if (!sc.hasNextLine()) return month;
-
-            month = sc.nextInt();
+            if (!sc.hasNextLine()) {
+                month = -1;
+            } else {
+                month = sc.nextInt();
+            }
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
@@ -100,7 +102,7 @@ public class FileReader {
             }
         }
 
-        return month;
+        return new Month(month);
     }
 
     /**

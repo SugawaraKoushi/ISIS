@@ -9,7 +9,7 @@
 package ru.bstu.itz212.fokin.lab1;
 
 /**
- * Предстваление дня праздника
+ * Представление дня праздника
  */
 public class Holiday {
     private int day;

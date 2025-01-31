@@ -1,3 +1,11 @@
+/**
+ * ChangeSignOfNumberPositions
+ *
+ * version 1.0
+ *
+ * (c) Фокин Владислав
+ */
+
 package ru.bstu.itz212.fokin.lab2;
 
 import java.util.ArrayList;

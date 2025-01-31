@@ -1,8 +1,8 @@
 /**
  * ConsoleInput
- *
+ * <p>
  * version 1.0
- *
+ * <p>
  * (c) Фокин Владислав
  */
 
@@ -60,9 +60,11 @@ public class ConsoleInput {
      * Ввод порядкового номера месяца из консоли
      * @return порядковый номер месяца
      */
-    public static int month() {
+    public static Month month() {
         System.out.print("Введите номер месяца (от 1 до 12): ");
-        return sc.nextInt();
+        int n = sc.nextInt();
+
+        return new Month(n);
     }
 
     /**
@@ -75,7 +77,7 @@ public class ConsoleInput {
         do {
             System.out.print("Введите длину массива: ");
             length = sc.nextInt();
-            
+
             if (length < 1) LOGGER.warn("Ввод нулевой или отрицательной длины массива");
 
         } while (length < 1);
@@ -88,6 +90,15 @@ public class ConsoleInput {
         }
 
         return array;
+    }
+
+    /**
+     * Считывает путь файла
+     * @return путь файла
+     */
+    public static String readFilePath() {
+        System.out.print("Введите путь к файлу: ");
+        return sc.nextLine();
     }
 
     public static void close() {
