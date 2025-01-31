@@ -15,10 +15,11 @@ import java.util.Scanner;
 
 public class ConsoleInput {
     private static Scanner sc;
-    private static final Logger LOGGER = LogManager.getLogger();
+    private static final Logger LOGGER;
 
     static {
         sc = new Scanner(System.in);
+        LOGGER = LogManager.getLogger(ConsoleInput.class);
     }
 
     /**
