@@ -9,7 +9,7 @@
         <Console name="CONSOLE">
             <PatternLayout pattern="%5p %d %-29c{1} - %m%n"/>
         </Console>
-        <File name="MAIN" fileName="logs/main.log">
+        <File name="DEBUG" fileName="logs/debug.log">
             <PatternLayout pattern="%5p %d %c{1} - %m%n" />
         </File>
         <File name="WARN" fileName="logs/error.log">
@@ -20,8 +20,8 @@
     <Loggers>
         <Root level="DEBUG">
             <AppenderRef ref="CONSOLE" level="INFO"/>
-            <AppenderRef ref="MAIN" />
-            <AppenderRef ref="WARN" level="ERROR" />
+            <AppenderRef ref="DEBUG" />
+            <AppenderRef ref="WARN" level="WARN" />
         </Root>
     </Loggers>
 
