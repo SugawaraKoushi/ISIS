@@ -7,7 +7,7 @@
 
     <Appenders>
         <Console name="CONSOLE">
-            <PatternLayout pattern="%5p %d %-25c{1} - %m%n"/>
+            <PatternLayout pattern="%5p %d %-29c{1} - %m%n"/>
         </Console>
         <File name="MAIN" fileName="logs/main.log">
             <PatternLayout pattern="%5p %d %c{1} - %m%n" />
@@ -18,9 +18,8 @@
     </Appenders>
 
     <Loggers>
-
         <Root level="DEBUG">
-            <AppenderRef ref="CONSOLE"/>
+            <AppenderRef ref="CONSOLE" level="INFO"/>
             <AppenderRef ref="MAIN" />
             <AppenderRef ref="WARN" level="ERROR" />
         </Root>

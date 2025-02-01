@@ -28,9 +28,9 @@ public class RelativePosition {
      * @return пересечение точки и окружности
      */
     public String intersection() {
-        double distance = Math.pow((point.getX() - circle.getCenter().getX()), 2)
-                + Math.pow((point.getY() - circle.getCenter().getY()), 2);
-        distance = Math.abs(distance);
+        double distance = Math.pow((circle.getCenter().getX() - point.getX()), 2)
+                + Math.pow((circle.getCenter().getY() - point.getY()), 2);
+        distance = Math.sqrt(distance);
 
         if (circle.getRadius() >= distance) {
             return String.format("%s и %s %s", point.toString(), circle.toString(), ARE_INTERSECT);

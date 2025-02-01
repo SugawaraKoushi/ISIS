@@ -15,7 +15,8 @@ import org.apache.logging.log4j.Logger;
  * Представление определения максимального отношения числа к сумме его цифр
  */
 public class MaxNumberToSumOfItsDigits {
-    private static final Logger LOGGER = LogManager.getLogger();
+    private static final Logger LOGGER = LogManager.getLogger(MaxNumberToSumOfItsDigits.class);
+
     /**
      * Определение максимального отношения числа к сумме его цифр, используя цикл for
      * @return максимальное значение отношения числа к сумме его цифр
@@ -24,7 +25,7 @@ public class MaxNumberToSumOfItsDigits {
         double max = 0;
 
         for (int i = 100; i < 1000; i++) {
-            LOGGER.debug("Определения суммы цифр для числа {}", i);
+            LOGGER.debug("Определение суммы цифр для числа {}", i);
             int sum = getNumberSumDigits(i);
             LOGGER.debug("Определение отношения числа {} к сумме его цифр {}", i, sum);
             double ratio = (double) i / sum;
@@ -43,7 +44,7 @@ public class MaxNumberToSumOfItsDigits {
         int i = 99;
 
         while (++i < 1000) {
-            LOGGER.debug("Определения суммы цифр для числа {}", i);
+            LOGGER.debug("Определение суммы цифр для числа {}", i);
             int sum = getNumberSumDigits(i);
             LOGGER.debug("Определение отношения числа {} к сумме его цифр {}", i, sum);
             double ratio = (double) i / sum;
@@ -59,5 +60,13 @@ public class MaxNumberToSumOfItsDigits {
         sum += number / 10 % 10;
         sum += number / 100;
         return sum;
+    }
+
+    public static void main(String[] args) {
+        LOGGER.info("Задание 3. Максимальное отношение числа к сумме его цифр");
+        double maxRatio = MaxNumberToSumOfItsDigits.calculateUsingForLoop();
+        LOGGER.info("Цикл for: {}", maxRatio);
+        maxRatio = MaxNumberToSumOfItsDigits.calculateUsingWhileLoop();
+        LOGGER.info("Цикл while: {}", maxRatio);
     }
 }

@@ -16,10 +16,11 @@ import java.util.Scanner;
 
 public class ConsoleInput {
     private static Scanner sc;
-    private static final Logger LOGGER = LogManager.getLogger();
+    private static final Logger LOGGER;
 
     static {
         sc = new Scanner(System.in);
+        LOGGER = LogManager.getLogger(ConsoleInput.class);
     }
 
     /**
@@ -78,11 +79,13 @@ public class ConsoleInput {
 
     /**
      * Ввод порядкового номера месяца из консоли
-     * @return порядковый номер месяца
+     * @return Месяц под порядковым номером
      */
-    public static int month() {
+    public static Month month() {
         LOGGER.info("Введите номер месяца (от 1 до 12): ");
-        return sc.nextInt();
+        int n = sc.nextInt();
+
+        return new Month(n);
     }
 
     /**
@@ -116,6 +119,17 @@ public class ConsoleInput {
         return array;
     }
 
+    /**
+     * Считывает путь файла
+     * @return путь файла
+     */
+    public static String readFilePath() {
+        return sc.nextLine();
+    }
+
+    /**
+     * Закрывает поток для сканера
+     */
     public static void close() {
         sc.close();
     }

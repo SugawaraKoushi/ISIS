@@ -94,17 +94,20 @@ public class FileReader {
      * @param path путь к файлу
      * @return порядковый номер месяца
      */
-    public static int readMonthFromFile(String path) {
+    public static Month readMonthFromFile(String path) {
         File file = new File(path);
-        int month = -1;
+        int month = 0;
         Scanner sc = null;
 
         try {
             sc = new Scanner(file);
 
-            if (!sc.hasNextLine()) return month;
-
-            month = sc.nextInt();
+            if (!sc.hasNextLine()) {
+                LOGGER.error("Файл пуст");
+                month = -1;
+            } else {
+                month = sc.nextInt();
+            }
         } catch (FileNotFoundException e) {
             LOGGER.error("Файл по указанному пути {} не найден", path, e);
         } finally {
@@ -113,7 +116,7 @@ public class FileReader {
             }
         }
 
-        return month;
+        return new Month(month);
     }
 
     /**

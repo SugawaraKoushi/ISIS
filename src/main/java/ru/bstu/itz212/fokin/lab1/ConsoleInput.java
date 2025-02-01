@@ -59,7 +59,7 @@ public class ConsoleInput {
 
     /**
      * Ввод порядкового номера месяца из консоли
-     * @return порядковый номер месяца
+     * @return Месяц под порядковым номером
      */
     public static Month month() {
         System.out.print("Введите номер месяца (от 1 до 12): ");
