@@ -7,7 +7,7 @@
 
     <Appenders>
         <Console name="CONSOLE">
-            <PatternLayout pattern="%5p %d %-29c{1} - %m%n"/>
+            <PatternLayout pattern="%5p %d %-29c{1} - %m%n" charset="UTF-8"/>
         </Console>
         <File name="DEBUG" fileName="logs/debug.log">
             <PatternLayout pattern="%5p %d %c{1} - %m%n" />

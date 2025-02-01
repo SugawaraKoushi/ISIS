@@ -31,9 +31,12 @@
                                 </goals>
                                 <configuration>
                                     <archive>
+                                        <manifestEntries>
+                                            <Multi-Release>true</Multi-Release>
+                                        </manifestEntries>
                                         <manifest>
                                             <mainClass>
-                                                ru.bstu.itz212.fokin.lab1.RelativePositionCalculation
+                                                ru.bstu.itz212.fokin.lab2.RelativePositionCalculation
                                             </mainClass>
                                         </manifest>
                                     </archive>
@@ -54,7 +57,7 @@
                                     <archive>
                                         <manifest>
                                             <mainClass>
-                                                ru.bstu.itz212.fokin.lab1.MonthWithHolidays
+                                                ru.bstu.itz212.fokin.lab2.MonthWithHolidays
                                             </mainClass>
                                         </manifest>
                                     </archive>
@@ -75,7 +78,7 @@
                                     <archive>
                                         <manifest>
                                             <mainClass>
-                                                ru.bstu.itz212.fokin.lab1.MaxNumberToSumOfItsDigits
+                                                ru.bstu.itz212.fokin.lab2.MaxNumberToSumOfItsDigits
                                             </mainClass>
                                         </manifest>
                                     </archive>
@@ -96,7 +99,7 @@
                                     <archive>
                                         <manifest>
                                             <mainClass>
-                                                ru.bstu.itz212.fokin.lab1.ChangeSignOfNumberPositions
+                                                ru.bstu.itz212.fokin.lab2.ChangeSignOfNumberPositions
                                             </mainClass>
                                         </manifest>
                                     </archive>

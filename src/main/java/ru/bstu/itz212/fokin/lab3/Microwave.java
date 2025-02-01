@@ -7,7 +7,6 @@
  */
 
 package ru.bstu.itz212.fokin.lab3;
-import ru.bstu.itz212.fokin.lab3.enums.GasStoveType;
 import ru.bstu.itz212.fokin.lab3.enums.MicrowaveControlType;
 import ru.bstu.itz212.fokin.lab3.enums.MicrowaveType;
 

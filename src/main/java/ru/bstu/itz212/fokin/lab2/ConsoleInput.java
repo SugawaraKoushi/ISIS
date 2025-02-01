@@ -15,21 +15,18 @@ import java.util.InputMismatchException;
 import java.util.Scanner;
 
 public class ConsoleInput {
-    private static Scanner sc;
-    private static final Logger LOGGER;
+    private static final Scanner sc = new Scanner(System.in);
+    private static final Logger LOGGER = LogManager.getLogger(ConsoleInput.class);
 
-    static {
-        sc = new Scanner(System.in);
-        LOGGER = LogManager.getLogger(ConsoleInput.class);
-    }
 
     /**
      * Создание точки при вводе из консоли
      * @return точка
      */
     public static Point point() {
-        double x = 0;
-        double y = 0;
+        double x;
+        double y;
+        Point point = null;
 
         LOGGER.info("Ввод координат точки:");
 
@@ -40,12 +37,12 @@ public class ConsoleInput {
             LOGGER.info("y = ");
             y = sc.nextDouble();
 
-            return new Point(x, y);
+            point = new Point(x, y);
         } catch (InputMismatchException e) {
             LOGGER.error("Некорректный ввод", e);
         }
 
-        return null;
+        return point;
     }
 
     /**
@@ -53,9 +50,10 @@ public class ConsoleInput {
      * @return окружность
      */
     public static Circle circle() {
-        double x = 0;
-        double y = 0;
-        double r = 0;
+        double x;
+        double y;
+        double r;
+        Circle circle = null;
 
         LOGGER.info("Ввод параметров окружности:");
 
@@ -69,12 +67,12 @@ public class ConsoleInput {
             LOGGER.info("r = ");
             r = sc.nextDouble();
 
-            return new Circle(x, y, r);
+            circle = new Circle(x, y, r);
         } catch (InputMismatchException e) {
             LOGGER.error("Некорректный ввод", e);
         }
 
-        return null;
+        return circle;
     }
 
     /**

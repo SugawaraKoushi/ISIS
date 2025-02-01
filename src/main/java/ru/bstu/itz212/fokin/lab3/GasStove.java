@@ -135,7 +135,6 @@ public class GasStove extends Appliance {
 
     private boolean parseYesOrNo(String input) {
         input = input.toLowerCase();
-
         return input.equals("да");
     }
 

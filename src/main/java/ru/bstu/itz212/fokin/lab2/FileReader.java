@@ -14,6 +14,7 @@ import org.apache.logging.log4j.Logger;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.Scanner;
+import ru.bstu.itz212.fokin.lab2.Circle;
 
 public class FileReader {
     private static final Logger LOGGER = LogManager.getLogger(FileReader.class);
@@ -74,6 +75,7 @@ public class FileReader {
                 return c;
             }
 
+            System.out.println("Чтение координат и радиуса");
             x = sc.nextDouble();
             y = sc.nextDouble();
             r = sc.nextDouble();
