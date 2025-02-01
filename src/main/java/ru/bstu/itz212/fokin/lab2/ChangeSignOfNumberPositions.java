@@ -43,7 +43,7 @@ public class ChangeSignOfNumberPositions {
     }
 
     public static void main(String[] args) {
-        System.out.println("Задание 4. Количество смен знаков в массиве и их позиции");
+        LOGGER.info("Задание 4. Количество смен знаков в массиве и их позиции");
         LOGGER.info("Введите путь к файлу данных о массиве:");
         String path = ConsoleInput.readFilePath();
 

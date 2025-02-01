@@ -31,8 +31,11 @@ public class RelativePositionCalculation {
         if (!pathToPoint.isEmpty() && !pathToCircle.isEmpty()) {
             p = FileReader.readPointFromFile(pathToPoint);
             c = FileReader.readCircleFromFile(pathToCircle);
-            relativePosition = new RelativePosition(p, c);
-            LOGGER.info(relativePosition.intersection());
+
+            if (p != null && c != null) {
+                relativePosition = new RelativePosition(p, c);
+                LOGGER.info(relativePosition.intersection());
+            }
         } else {
             LOGGER.error("Не найден файл(ы) для считывания данных о точке и/или окружности с путями \"{}\"" +
                     " и \"{}\"", pathToPoint, pathToCircle);
