@@ -16,7 +16,7 @@ import java.io.FileNotFoundException;
 import java.util.Scanner;
 
 public class FileReader {
-    private static final Logger LOGGER = LogManager.getLogger();
+    private static final Logger LOGGER = LogManager.getLogger(FileReader.class);
 
     /**
      * Создание точки чтением из файла
