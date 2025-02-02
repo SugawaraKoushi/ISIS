@@ -27,16 +27,16 @@ public class Main {
         System.out.print("""
                 Выберите тип техники:
                 1 - газовая плита;
-                2 - электронная техника;
-                3 - микроволновка.
+                2 - микроволновка;
+                3 - стиральная машина;
                 """);
         int type = scanner.nextInt();
         scanner.nextLine();
 
         Appliance appliance = switch (type) {
             case 1 -> new GasStove();
-            case 2 -> new ElectronicAppliance();
-            case 3 -> new Microwave();
+            case 2 -> new Microwave();
+            case 3 -> new WashingMachine();
             default -> null;
         };
 

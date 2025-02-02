@@ -1,8 +1,8 @@
 /**
  * GasStove
- *
+ * <p>
  * version 1.0
- *
+ * <p>
  * (c) Фокин Владислав
  */
 
@@ -11,33 +11,25 @@ package ru.bstu.itz212.fokin.lab3;
 import ru.bstu.itz212.fokin.lab3.enums.GasStoveType;
 
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.Scanner;
 
 /**
  * Представление газовой плиты
  */
 public class GasStove extends Appliance {
-    private String name;
-    private String manufacturer;
-    private String serialNumber;
     private GasStoveType type;
-    private Date productionDate;
-    private double price;
     private byte burnerCount;
     private boolean electricIgnition;
-    private boolean oven;
-    private boolean grill;
-    private boolean timer;
-    private final SimpleDateFormat dateFormatter = new SimpleDateFormat("dd.MM.yyyy");
+    private boolean hasOven;
+    private boolean hasGrill;
+    private boolean hasTimer;
 
     @Override
     public void init(Scanner scanner) {
-        System.out.print("Введите название газовой плиты: ");
+        System.out.print("Введите наименование модели: ");
         name = scanner.nextLine();
 
-        System.out.print("Введите производителя газовой плиты: ");
+        System.out.print("Введите производителя: ");
         manufacturer = scanner.nextLine();
 
         System.out.print("Введите серийный номер: ");
@@ -63,7 +55,7 @@ public class GasStove extends Appliance {
             try {
                 System.out.print("Введите дату производства (дд.мм.гггг): ");
                 String dateStr = scanner.nextLine();
-                productionDate = dateFormatter.parse(dateStr);
+                productionDate = DATE_FORMAT.parse(dateStr);
                 inputError = false;
             } catch (ParseException e) {
                 System.out.println("Некорректный ввод даты. Дата должна быть в формате дд.мм.гггг");
@@ -81,18 +73,18 @@ public class GasStove extends Appliance {
 
         if (!type.equals(GasStoveType.PORTABLE)) {
             System.out.print("Наличие духовки (да/нет): ");
-            oven = parseYesOrNo(scanner.nextLine());
+            hasOven = parseYesOrNo(scanner.nextLine());
 
-            if (oven) {
+            if (hasOven) {
                 System.out.print("Наличие гриля в духовке (да/нет): ");
-                grill = parseYesOrNo(scanner.nextLine());
+                hasGrill = parseYesOrNo(scanner.nextLine());
             }
         }
 
         System.out.print("Наличие таймера (да/нет): ");
-        timer = parseYesOrNo(scanner.nextLine());
+        hasTimer = parseYesOrNo(scanner.nextLine());
 
-        System.out.print("Введите стоимость: ");
+        System.out.print("Введите стоимость (руб): ");
         price = scanner.nextDouble();
         scanner.nextLine();
     }
@@ -115,30 +107,21 @@ public class GasStove extends Appliance {
             case PORTABLE -> "Портативная";
         };
         sb.append("Тип - ").append(type).append("\n")
-                .append("Дата изготовления - ").append(dateFormatter.format(productionDate)).append("\n")
+                .append("Дата изготовления - ").append(DATE_FORMAT.format(productionDate)).append("\n")
                 .append("Количество конфорок - ").append(burnerCount).append("\n")
                 .append("Наличие электронного поджига - ").append(parseBooleanAsYesOrNo(electricIgnition)).append("\n");
 
         if (!type.equals(GasStoveType.PORTABLE)) {
-            sb.append("Наличие духовки - ").append(parseBooleanAsYesOrNo(oven)).append("\n");
+            sb.append("Наличие духовки - ").append(parseBooleanAsYesOrNo(hasOven)).append("\n");
 
-            if (oven) {
-                sb.append("Наличие гриля в духовке - ").append(parseBooleanAsYesOrNo(grill)).append("\n");
+            if (hasOven) {
+                sb.append("Наличие гриля в духовке - ").append(parseBooleanAsYesOrNo(hasGrill)).append("\n");
             }
         }
 
-        sb.append("Наличие таймера - ").append(parseBooleanAsYesOrNo(timer)).append("\n")
+        sb.append("Наличие таймера - ").append(parseBooleanAsYesOrNo(hasTimer)).append("\n")
                 .append("Цена - ").append(getCost()).append("руб. \n");
 
         return sb.toString();
-    }
-
-    private boolean parseYesOrNo(String input) {
-        input = input.toLowerCase();
-        return input.equals("да");
-    }
-
-    private String parseBooleanAsYesOrNo(boolean flag) {
-        return flag ? "да" : "нет";
     }
 }
