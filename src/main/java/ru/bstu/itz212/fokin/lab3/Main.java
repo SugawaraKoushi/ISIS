@@ -59,9 +59,11 @@ public class Main {
             applianceList.add(appliance);
         }
 
-        ApplianceComparator comparator = new ApplianceComparator();
-        applianceList.sort(comparator);
+        if (!applianceList.isEmpty()) {
+            ApplianceComparator comparator = new ApplianceComparator();
+            applianceList.sort(comparator);
 
-        System.out.println(applianceList.get(applianceList.size() - 1));
+            System.out.println(applianceList.get(applianceList.size() - 1));
+        }
     }
 }

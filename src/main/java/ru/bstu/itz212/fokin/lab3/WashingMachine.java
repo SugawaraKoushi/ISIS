@@ -8,12 +8,8 @@
 
 package ru.bstu.itz212.fokin.lab3;
 
-import ru.bstu.itz212.fokin.lab3.enums.ElectronicApplianceControlType;
 import ru.bstu.itz212.fokin.lab3.enums.WashingMachineLoadingType;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.Scanner;
 
 /**
@@ -25,7 +21,6 @@ public class WashingMachine extends ElectronicAppliance {
     private String energyEfficiency;
     private boolean hasDryFunction;
     private boolean hasLeakProtection;
-    private final SimpleDateFormat dateFormatter = new SimpleDateFormat("dd.MM.yyyy");
 
     @Override
     public void init(Scanner scanner) {
