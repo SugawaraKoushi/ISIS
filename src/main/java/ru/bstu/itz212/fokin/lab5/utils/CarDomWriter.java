@@ -1,3 +1,11 @@
+/**
+ * CarDomWriter
+ *
+ * version 1.0
+ *
+ * (с) Фокин Владислав
+ */
+
 package ru.bstu.itz212.fokin.lab5.utils;
 
 import org.w3c.dom.Document;
@@ -14,6 +22,9 @@ import javax.xml.transform.stream.StreamResult;
 import java.io.File;
 import java.util.List;
 
+/**
+ * Класс для записи сущности автомобиля в xml-файл
+ */
 public class CarDomWriter {
     private List<Car> cars;
 
@@ -21,14 +32,10 @@ public class CarDomWriter {
         this.cars = cars;
     }
 
-    public List<Car> getCars() {
-        return cars;
-    }
-
-    public void setCars(List<Car> cars) {
-        this.cars = cars;
-    }
-
+    /**
+     * Запись автомобилей {@code cars} в файл
+     * @param path путь к файлу записи
+     */
     public void writeToFile(String path) {
         DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
 

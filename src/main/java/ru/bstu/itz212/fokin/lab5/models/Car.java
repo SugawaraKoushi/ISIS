@@ -1,9 +1,20 @@
+/**
+ * Car
+ *
+ * version 1.0
+ *
+ * (с) Фокин Владислав
+ */
+
 package ru.bstu.itz212.fokin.lab5.models;
 
 import java.util.Scanner;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+/**
+ * Представление автомобиля с ФИО владельца
+ */
 public class Car {
     private int id;
     private String brand;

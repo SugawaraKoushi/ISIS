@@ -1,3 +1,11 @@
+/**
+ *  CarRepository
+ *
+ *  version 1.0
+ *
+ *  (с) Фокин Владислав
+ */
+
 package ru.bstu.itz212.fokin.lab5.repositories;
 
 import ru.bstu.itz212.fokin.lab5.models.Car;
@@ -8,11 +16,19 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
+/**
+ * CRUD репозиторий для сущности автомобиля
+ */
 public class CarRepository extends CrudRepository<Car> {
     public CarRepository(Connection connection) {
         super(connection);
     }
 
+    /**
+     * Создает и добавляет сущность автомобиль в БД
+     * @param car автомобиль
+     * @return Автомобиль с присвоенным ему идентификатором
+     */
     @Override
     public Car create(Car car) {
         String query;
@@ -51,6 +67,11 @@ public class CarRepository extends CrudRepository<Car> {
         return car;
     }
 
+    /**
+     * Получает автомобиль по идентификатору из БД
+     * @param id идентификатор автомобиля
+     * @return автомобиль
+     */
     @Override
     public Car get(int id) {
         String query = """
@@ -71,6 +92,10 @@ public class CarRepository extends CrudRepository<Car> {
         return car;
     }
 
+    /**
+     * Обновляет сущность автомобиля в БД
+     * @param car автомобиль с обновленными параметрами
+     */
     @Override
     public void update(Car car) {
         String query = """
@@ -91,6 +116,10 @@ public class CarRepository extends CrudRepository<Car> {
         }
     }
 
+    /**
+     * Удаляет автомобиль из БД
+     * @param car автомобиль
+     */
     @Override
     public void delete(Car car) {
         String query = """
@@ -105,6 +134,11 @@ public class CarRepository extends CrudRepository<Car> {
         }
     }
 
+    /**
+     * Осуществляет поиск искомых автомобилей в БД
+     * @param params параметры поиска для автомобиля
+     * @return список найденных автомобилей
+     */
     public List<Car> getByParams(CarSearchParams params) {
         StringBuilder sb = new StringBuilder();
         sb.append("SELECT * FROM public.\"Cars\" WHERE");
@@ -126,7 +160,6 @@ public class CarRepository extends CrudRepository<Car> {
         sb.append(getWhereParam(params.getOwnersLastNames(), "OwnerLastName"));
         sb.append(getWhereParam(params.getOwnersFirstNames(), "OwnerFirstName"));
         sb.append(getWhereParam(params.getOwnersMiddleNames(), "OwnerMiddleName"));
-
         sb.delete(sb.toString().length() - 4, sb.toString().length());
         String query = sb.toString();
 
@@ -146,6 +179,10 @@ public class CarRepository extends CrudRepository<Car> {
         return cars;
     }
 
+    /**
+     * Возвращает все сущности автомобилей из БД
+     * @return список автомобилей
+     */
     public List<Car> getAll() {
         String query = "SELECT * FROM public.\"Cars\"";
         List<Car> cars = new ArrayList<>();

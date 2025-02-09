@@ -1,9 +1,19 @@
+/**
+ * TablesConfigure
+ *
+ * version 1.0
+ *
+ * (с) Фокин Владислав
+ */
 package ru.bstu.itz212.fokin.lab5.utils;
 
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.sql.Statement;
 
+/**
+ * Конфигуратор таблиц для БД
+ */
 public class TablesConfigure {
     private final Connection connection;
 
@@ -11,6 +21,9 @@ public class TablesConfigure {
         this.connection = connection;
     }
 
+    /**
+     * Создает таблицу Cars в БД, если та не существует
+     */
     public void createTablesIfNotExists() {
         try {
             Statement statement = connection.createStatement();
@@ -28,18 +41,6 @@ public class TablesConfigure {
                         PRIMARY KEY ("Id"),
                         UNIQUE ("LicensePlate")
                     )
-                    """;
-
-            String createCarOwnersTableQuery = """
-                    CREATE TABLE IF NOT EXISTS "CarOwners"
-                    (
-                        "Id" integer NOT NULL,
-                        "Gender" boolean NOT NULL,
-                        "LastName" text NOT NULL,
-                        "FirstName" text NOT NULL,
-                        "MiddleName" text,
-                        PRIMARY KEY ("Id")
-                    );
                     """;
 
             statement.execute(createCarsTableQuery);

@@ -1,3 +1,11 @@
+/**
+ * CarHandler
+ *
+ * version 1.0
+ *
+ * (с) Фокин Владислав
+ */
+
 package ru.bstu.itz212.fokin.lab5.utils;
 
 import org.xml.sax.Attributes;
@@ -8,6 +16,9 @@ import ru.bstu.itz212.fokin.lab5.models.Car;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Обработчик xml-файла для сущности автомобиля
+ */
 public class CarHandler extends DefaultHandler {
     private static final String CARS = "cars";
     private static final String CAR = "car";

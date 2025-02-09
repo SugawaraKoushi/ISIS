@@ -1,3 +1,11 @@
+/**
+ * Main
+ *
+ * version 1.0
+ *
+ * (с) Фокин Владислав
+ */
+
 package ru.bstu.itz212.fokin.lab5;
 
 import org.xml.sax.SAXException;
@@ -122,21 +130,6 @@ public class Main {
         String password = props.getProperty("password");
         String url = String.format("%s?user=%s&password=%s", host, username, password);
         return DriverManager.getConnection(url);
-    }
-
-    private static int getAction(Scanner scanner) {
-        int actionType;
-
-        do {
-            System.out.print("""
-                    Выберите действие:
-                    1. Ввод данных
-                    2. Вывод данных
-                    """);
-            actionType = scanner.nextInt();
-        } while (actionType < 1 || actionType > 2);
-
-        return actionType;
     }
 
     private static int getFormatType(Scanner scanner) {
