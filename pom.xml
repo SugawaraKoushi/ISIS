@@ -110,6 +110,51 @@
                                     <appendAssemblyId>false</appendAssemblyId>
                                 </configuration>
                             </execution>
+                            <execution>
+                                <id>Appliance</id>
+                                <phase>package</phase>
+                                <goals>
+                                    <goal>single</goal>
+                                </goals>
+                                <configuration>
+                                    <archive>
+                                        <manifest>
+                                            <mainClass>
+                                                ru.bstu.itz212.fokin.lab3.Main
+                                            </mainClass>
+                                        </manifest>
+                                    </archive>
+                                    <descriptorRefs>
+                                        <descriptorRef>jar-with-dependencies</descriptorRef>
+                                    </descriptorRefs>
+                                    <finalName>Appliance</finalName>
+                                    <appendAssemblyId>false</appendAssemblyId>
+                                </configuration>
+                            </execution>
+                            <execution>
+                                <id>Regex</id>
+                                <phase>package</phase>
+                                <goals>
+                                    <goal>single</goal>
+                                </goals>
+                                <configuration>
+                                    <archive>
+                                        <manifestEntries>
+                                            <Multi-Release>true</Multi-Release>
+                                        </manifestEntries>
+                                        <manifest>
+                                            <mainClass>
+                                                ru.bstu.itz212.fokin.lab4.Main
+                                            </mainClass>
+                                        </manifest>
+                                    </archive>
+                                    <descriptorRefs>
+                                        <descriptorRef>jar-with-dependencies</descriptorRef>
+                                    </descriptorRefs>
+                                    <finalName>Regex</finalName>
+                                    <appendAssemblyId>false</appendAssemblyId>
+                                </configuration>
+                            </execution>
                         </executions>
                     </plugin>
                 </plugins>

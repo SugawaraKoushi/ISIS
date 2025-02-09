@@ -8,7 +8,7 @@ import java.util.List;
 import java.util.Scanner;
 
 public class Main {
-    private static final Logger LOGGER = LogManager.getLogger();
+    private static final Logger LOGGER = LogManager.getLogger(Main.class);
 
     public static int inputCountOfAppliance(Scanner scanner) {
         System.out.print("Введите количество техники: ");
