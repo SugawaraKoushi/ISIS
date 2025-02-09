@@ -11,6 +11,9 @@ package ru.bstu.itz212.fokin.lab4.bbcodes;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+/**
+ * Класс для замены BB-кода {@code [ul]...[/ul]} на {@code <ul>...</ul>}
+ */
 public class UlCode implements BBCode {
     private final Pattern pattern = Pattern.compile("(?s)\\[ul](.+?)\\[/ul]");
     private final String[] replacement = new String[]{"<ul>", "</ul>"};

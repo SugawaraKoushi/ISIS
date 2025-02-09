@@ -11,6 +11,9 @@ package ru.bstu.itz212.fokin.lab4.bbcodes;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+/**
+ * Класс для замены BB-кода {@code [url=...]...[/url]} на {@code <url href="...">...</url>}
+ */
 public class UrlCode implements BBCode {
     private final Pattern pattern1 = Pattern.compile("(?s)\\[url=(.+?)](.+?)\\[/url]");
     private final Pattern pattern2 = Pattern.compile("(?s)\\[url](.+?)\\[/url]");

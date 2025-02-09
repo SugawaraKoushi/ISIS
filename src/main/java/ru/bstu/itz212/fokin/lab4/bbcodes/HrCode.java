@@ -11,6 +11,9 @@ package ru.bstu.itz212.fokin.lab4.bbcodes;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+/**
+ * Класс для замены BB-кода {@code [hr]} на {@code <hr />}
+ */
 public class HrCode implements BBCode {
     private final Pattern pattern = Pattern.compile("\\[hr]");
     private final String replacement = "<hr />";
