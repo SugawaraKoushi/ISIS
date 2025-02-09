@@ -1,9 +1,20 @@
+/**
+ * ColorCode
+ *
+ * version 1.0
+ *
+ * (с) Фокин Владислав
+ */
+
 package ru.bstu.itz212.fokin.lab4.bbcodes;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class ColorCode implements IBBCode {
+/**
+ * Класс для замены BB-кода {@code [color=...]...[/color]} на {@code <span style="color: ...;"...</span>}
+ */
+public class ColorCode implements BBCode {
     private final Pattern pattern = Pattern.compile("(?s)\\[color=(.+?)](.+?)\\[/color]");
     private final String[] replacement = new String[]{"<span style=\"color: ", ";\">", "</span>"};
 

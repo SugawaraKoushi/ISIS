@@ -1,9 +1,17 @@
+/**
+ * FontCode
+ *
+ * version 1.0
+ *
+ * (с) Фокин Владислав
+ */
+
 package ru.bstu.itz212.fokin.lab4.bbcodes;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class FontCode implements IBBCode {
+public class FontCode implements BBCode {
     private final Pattern pattern = Pattern.compile("(?s)\\[font=(.+?)](.+?)\\[/font]");
     private final String[] replacement = new String[]{"<span style=\"font-style: ", ";\">", "</span>"};
 

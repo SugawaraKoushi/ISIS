@@ -1,3 +1,11 @@
+/**
+ * Main
+ *
+ * version 1.0
+ *
+ * (с) Фокин Владислав
+ */
+
 package ru.bstu.itz212.fokin.lab4;
 
 public class Main {

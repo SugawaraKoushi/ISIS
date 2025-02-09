@@ -1,3 +1,11 @@
+/**
+ * BBCodeParser
+ *
+ * version 1.0
+ *
+ * (с) Фокин Владислав
+ */
+
 package ru.bstu.itz212.fokin.lab4;
 
 import ru.bstu.itz212.fokin.lab4.bbcodes.*;
@@ -6,7 +14,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class BBCodeParser {
-    private static List<IBBCode> bbCodes = new ArrayList<>();
+    private static List<BBCode> bbCodes = new ArrayList<>();
 
     static {
         bbCodes.add(new BCode());
@@ -33,7 +41,7 @@ public class BBCodeParser {
     }
 
     public static String parse(String text) {
-        for (IBBCode bbCode : bbCodes) {
+        for (BBCode bbCode : bbCodes) {
             text = bbCode.replaceEntries(text);
         }
 

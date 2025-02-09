@@ -1,9 +1,17 @@
+/**
+ * LiCode
+ *
+ * version 1.0
+ *
+ * (с) Фокин Владислав
+ */
+
 package ru.bstu.itz212.fokin.lab4.bbcodes;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class LiCode implements IBBCode {
+public class LiCode implements BBCode {
     private final Pattern pattern1 = Pattern.compile("(?s)\\[li](.+?)\\[/li]");
     private final Pattern pattern2 = Pattern.compile("\\[\\*](.+)");
     private final String[] replacement = new String[]{"<li>", "</li>"};
