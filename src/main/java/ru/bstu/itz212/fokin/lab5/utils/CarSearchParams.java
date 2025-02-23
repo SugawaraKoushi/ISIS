@@ -15,6 +15,8 @@ import java.util.List;
  */
 public class CarSearchParams {
     private List<Integer> ids;
+    private boolean isMinId;
+    private boolean isMaxId;
     private List<String> brands;
     private List<String> models;
     private List<String> colors;
@@ -23,11 +25,13 @@ public class CarSearchParams {
     private List<String> ownersFirstNames;
     private List<String> ownersMiddleNames;
 
-    public CarSearchParams(List<Integer> ids, List<String> brands,
+    public CarSearchParams(List<Integer> ids, boolean isMinId, boolean isMaxId, List<String> brands,
                            List<String> models, List<String> colors,
                            List<String> licensePlates, List<String> ownersLastNames,
                            List<String> ownersFirstNames, List<String> ownersMiddleNames) {
         this.ids = ids;
+        this.isMinId = isMinId;
+        this.isMaxId = isMaxId;
         this.brands = brands;
         this.models = models;
         this.colors = colors;
@@ -39,6 +43,14 @@ public class CarSearchParams {
 
     public List<Integer> getIds() {
         return ids;
+    }
+
+    public boolean isMinId() {
+        return isMinId;
+    }
+
+    public boolean isMaxId() {
+        return isMaxId;
     }
 
     public List<String> getBrands() {

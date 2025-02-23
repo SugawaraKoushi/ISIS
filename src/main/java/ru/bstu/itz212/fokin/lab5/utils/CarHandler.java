@@ -1,8 +1,8 @@
 /**
  * CarHandler
- *
+ * <p>
  * version 1.0
- *
+ * <p>
  * (с) Фокин Владислав
  */
 
@@ -13,8 +13,12 @@ import org.xml.sax.SAXException;
 import org.xml.sax.helpers.DefaultHandler;
 import ru.bstu.itz212.fokin.lab5.models.Car;
 
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Properties;
 
 /**
  * Обработчик xml-файла для сущности автомобиля
@@ -30,14 +34,26 @@ public class CarHandler extends DefaultHandler {
     private static final String LAST_NAME = "lastName";
     private static final String FIRST_NAME = "firstName";
     private static final String MIDDLE_NAME = "middleName";
+    private static Properties props;
 
     private String element;
     private Car car = null;
     private List<Car> cars;
 
+    static {
+        props = new Properties();
+
+        try (InputStream input = new FileInputStream("config.properties")) {
+            props.load(input);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+
     @Override
     public void startDocument() throws SAXException {
-        System.out.println("Начало обработки данных из XML-файла");
+        System.out.println(props.getProperty("startParseXML"));
     }
 
     @Override
@@ -103,7 +119,7 @@ public class CarHandler extends DefaultHandler {
 
     @Override
     public void endDocument() throws SAXException {
-        System.out.println("Обработка XML-файла закончена");
+        System.out.println(props.getProperty("endParseXML"));
     }
 
     public List<Car> getCars() {

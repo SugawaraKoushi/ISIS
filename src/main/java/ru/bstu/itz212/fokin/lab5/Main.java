@@ -203,6 +203,8 @@ public class Main {
 
     private static List<Car> getCarsBySearchParams(Scanner scanner, CarRepository carRepository) {
         List<Integer> ids = new ArrayList<>();
+        boolean isMinId = false;
+        boolean isMaxId = false;
         List<String> brands = new ArrayList<>();
         List<String> models = new ArrayList<>();
         List<String> colors = new ArrayList<>();
@@ -213,6 +215,15 @@ public class Main {
 
         int field;
         boolean stop = false;
+
+        scanner.nextLine();
+        System.out.println("Найти минимальное значение для Id?");
+        isMinId = parseYesOrNo(scanner.nextLine());
+
+        if (!isMinId) {
+            System.out.println("Найти максимальное значение для Id?");
+            isMaxId = parseYesOrNo(scanner.nextLine());
+        }
 
         do {
             do {
@@ -264,7 +275,7 @@ public class Main {
             }
         } while (!stop);
 
-        CarSearchParams params = new CarSearchParams(ids, brands, models, colors, licensePlates,
+        CarSearchParams params = new CarSearchParams(ids, isMinId, isMaxId, brands, models, colors, licensePlates,
                 ownersLastNames, ownersFirstNames, ownersMiddleNames);
 
         return carRepository.getByParams(params);
@@ -355,5 +366,10 @@ public class Main {
     private static List<Car> getCarsToDelete(Scanner scanner, CarRepository carRepository) {
         System.out.println("Выберите автомобиль для удаления:");
         return getCarsBySearchParams(scanner, carRepository);
+    }
+
+    private static boolean parseYesOrNo(String input) {
+        input = input.toLowerCase();
+        return input.equals("да");
     }
 }

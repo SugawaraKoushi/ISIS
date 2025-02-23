@@ -161,6 +161,15 @@ public class CarRepository extends CrudRepository<Car> {
         sb.append(getWhereParam(params.getOwnersFirstNames(), "OwnerFirstName"));
         sb.append(getWhereParam(params.getOwnersMiddleNames(), "OwnerMiddleName"));
         sb.delete(sb.toString().length() - 4, sb.toString().length());
+
+        if (params.isMinId()) {
+            sb.append("ORDER BY \"Id\" ASC LIMIT 1");
+        }
+
+        if (params.isMaxId()) {
+            sb.append("ORDER BY \"Id\" DESC LIMIT 1");
+        }
+
         String query = sb.toString();
 
         try (Statement statement = super.getConnection().createStatement()) {
