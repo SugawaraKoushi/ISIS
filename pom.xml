@@ -155,6 +155,30 @@
                                     <appendAssemblyId>false</appendAssemblyId>
                                 </configuration>
                             </execution>
+                            <execution>
+                                <id>BD</id>
+                                <phase>package</phase>
+                                <goals>
+                                    <goal>single</goal>
+                                </goals>
+                                <configuration>
+                                    <archive>
+                                        <manifestEntries>
+                                            <Multi-Release>true</Multi-Release>
+                                        </manifestEntries>
+                                        <manifest>
+                                            <mainClass>
+                                                ru.bstu.itz212.fokin.lab5.Main
+                                            </mainClass>
+                                        </manifest>
+                                    </archive>
+                                    <descriptorRefs>
+                                        <descriptorRef>jar-with-dependencies</descriptorRef>
+                                    </descriptorRefs>
+                                    <finalName>BD</finalName>
+                                    <appendAssemblyId>false</appendAssemblyId>
+                                </configuration>
+                            </execution>
                         </executions>
                     </plugin>
                 </plugins>

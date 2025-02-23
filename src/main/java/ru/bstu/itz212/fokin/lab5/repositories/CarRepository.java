@@ -193,7 +193,7 @@ public class CarRepository extends CrudRepository<Car> {
      * @return список автомобилей
      */
     public List<Car> getAll() {
-        String query = "SELECT * FROM public.\"Cars\"";
+        String query = "SELECT * FROM public.\"Cars\" ORDER BY \"Id\"";
         List<Car> cars = new ArrayList<>();
 
         try (Statement statement = super.getConnection().createStatement()) {

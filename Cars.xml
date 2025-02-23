@@ -1,25 +1,25 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <cars>
-    <car id="1">
-        <brand>Toyota</brand>
-        <model>Camry</model>
-        <color>Black</color>
-        <licensePlate>А123ВЕ78</licensePlate>
+    <car id="5">
+        <brand>Honda</brand>
+        <model>Civic</model>
+        <color>Red</color>
+        <licensePlate>Р654АВ12</licensePlate>
         <owner>
-            <lastName>Иванов</lastName>
-            <firstName>Иван</firstName>
-            <middleName>Иванович</middleName>
+            <lastName>Федоров</lastName>
+            <firstName>Дмитрий</firstName>
+            <middleName>Николаевич</middleName>
         </owner>
     </car>
-    <car id="2">
-        <brand>BMW</brand>
-        <model>X5</model>
-        <color>Silver</color>
-        <licensePlate>К456МУ90</licensePlate>
+    <car id="6">
+        <brand>Ford</brand>
+        <model>Focus</model>
+        <color>Gray</color>
+        <licensePlate>Т987УК34</licensePlate>
         <owner>
-            <lastName>Петрова</lastName>
-            <firstName>Анна</firstName>
-            <middleName>Павловна</middleName>
+            <lastName>Морозова</lastName>
+            <firstName>Ольга</firstName>
+            <middleName>Игоревна</middleName>
         </owner>
     </car>
 </cars>
